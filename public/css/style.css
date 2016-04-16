@@ -1,0 +1,126 @@
+* {
+    font-family: 'Open Sans';
+}
+
+@media screen and (min-width: 1160px) {
+    .main {
+        width: 1160px;
+    }
+
+    input[type="text"] {
+        width: 400px;
+	    margin-top: 20px;
+    }
+
+    select {
+        margin-top: 20px;
+    }
+
+    .shortinput {
+        width: 100px !important;
+    }
+
+    label {
+        width: 500px;
+        float: left;
+        text-align: right;
+        clear: left;
+    }
+}
+
+html, body {
+    height: 100%;
+}
+
+header {
+    text-align: center;
+    width: 100%;
+}
+
+.header-text {
+    text-align: right;
+    width: 100%;
+}
+
+nav {
+    font-size: 150%;
+}
+
+#main {
+    padding: 5px;
+    padding-top: 40px;
+    width: 1150px;
+    margin: 0 auto 0 auto;
+}
+
+.main {
+    margin: 0 auto 0 auto;
+}
+
+.form {
+    padding: 5px;
+}
+
+table, th, td {
+    border: 1px solid #aaaaaa;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    text-align: center;
+    padding: 5px;
+}
+
+th {
+    vertical-align: bottom;
+}
+
+.navbuttons {
+    text-align: center;
+}
+
+.navbutton {
+    border: 1px solid black;
+    padding: 5px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #3366ff;
+}
+
+::-moz-selection {
+    text-shadow: none;
+    background: #fed136;
+}
+
+::selection {
+    text-shadow: none;
+    background: #fed136;
+}
+
+label {
+    display: block;
+    padding-right: 5px;
+    padding-top:20px;
+}
+
+.connectedSortable {
+    border: 1px solid black;
+    width: 252px;
+    min-height: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.connectedSortable li {
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 235px;
+}
