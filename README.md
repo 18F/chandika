@@ -4,7 +4,7 @@ Ambika provides information on the resources being used by our services, allows 
 
 ## Developing and testing locally
 
-Ambika uses [Scotch Box](https://box.scotch.io/) as a testing environment. Check out the code, run `vagrant up`, and hit `192.168.33.10`.
+Ambika uses [Scotch Box](https://box.scotch.io/) as a testing environment. Check out the code, run `vagrant up`, and hit `192.168.33.20`.
 
 ## Deploying to cloud.gov
 

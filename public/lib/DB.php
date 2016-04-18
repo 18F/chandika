@@ -31,6 +31,7 @@ class DB
                           nickname    VARCHAR(50) NOT NULL,
                           provider    VARCHAR(50) NOT NULL,
                           identifier  VARCHAR(255) NOT NULL,
+                          is_prod     TINYINT NOT NULL DEFAULT 0,
                           created     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                           PRIMARY KEY(id))");
         self::$conn->exec("CREATE TABLE IF NOT EXISTS services (
@@ -48,7 +49,7 @@ class DB
                           owner       VARCHAR(255) NOT NULL,
                           uri         VARCHAR(50) NOT NULL,
                           created     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                          expires     TIMESTAMP NOT NULL,
+                          expires     INT NULL,
                           PRIMARY KEY(id))");
     }
 }

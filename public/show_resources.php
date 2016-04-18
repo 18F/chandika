@@ -19,7 +19,8 @@ include "header.php";
         </tr>
         <?
         foreach ($resources->resources() as $row) {
-            print "<tr><td>{$row->resource_type}</td><td>{$row->owner}</td><td>{$row->uri}</td><td>{$row->created}</td><td>{$row->expires}</td></tr>";
+            $expiry = gmdate("Y-m-d", $row->expires);
+            print "<tr><td>{$row->resource_type}</td><td>{$row->owner}</td><td>{$row->uri}</td><td>{$row->created}</td><td>$expiry</td></tr>";
         }
         ?>
     </table>

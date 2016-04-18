@@ -3,6 +3,7 @@ class ResourceAdministrator
 {
     private $service_id;
     private $service_name;
+    private static $types_with_expiry = [ "AWS resource" => [ "prod" => 365, "non-prod" => 30 ], "IAA" => [], "HTTPS certificate" => [], "Domain name" => [] ];
 
     public function __construct($service_id)
     {
@@ -26,6 +27,14 @@ class ResourceAdministrator
         return $this->service_name;
     }
 
+    private function get_expiry_date($resource_type, $is_prod) {
+        if (!array_key_exists($resource_type, self::$types_with_expiry)) throw new Exception("Couldn't find type ".$resource_type);
+        $expiry_data = self::$types_with_expiry[$resource_type];
+        if (empty($expiry_data)) return null;
+        $days_to_add = $is_prod ? $expiry_data["prod"] : $expiry_data["non-prod"];
+        return time() + (24 * 60 * 60 * $days_to_add);
+    }
+
     public function create($resource_type, $owner, $uri, $expires)
     {
         $insert = DB::connection()->prepare("INSERT INTO resources (service_id, resource_type, owner, uri, expires) VALUES (:service_id, :resource_type, :owner, :uri, :expires)");
@@ -33,13 +42,14 @@ class ResourceAdministrator
         $insert->bindParam(':resource_type', $resource_type);
         $insert->bindParam(':owner', $owner);
         $insert->bindParam(':uri', $uri);
-        $insert->bindParam(':expires', $expires);
+        $expiry_date = $this->get_expiry_date($resource_type, false);
+        $insert->bindParam(':expires', $expiry_date);
         $insert->execute();
     }
 
-    public function types()
+    public static function types()
     {
-        return [ "AWS resource", "IAA", "HTTPS certificate", "Domain name" ];
+        return array_keys(self::$types_with_expiry);
     }
 
     public static function all() {
