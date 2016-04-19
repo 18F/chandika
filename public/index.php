@@ -8,7 +8,7 @@ include "header.php";
 $filter = new Filter();
 $expiry_selected = isset($_REQUEST["expiry"]) ? $_REQUEST["expiry"] : "7";
 $service_selected = isset($_REQUEST["service"]) ? $_REQUEST["service"] : "";
-$resource_type_selected = isset($_REQUEST["resource_type_selected"]) ? $_REQUEST["resource_type_selected"] : "";
+$resource_type_selected = isset($_REQUEST["resource_type"]) ? $_REQUEST["resource_type"] : "";
 $service_admin = new ServiceAdministrator();
 $services = ["" => "all"];
 foreach ($service_admin->services() as $service) {
@@ -37,9 +37,9 @@ foreach (ResourceAdministrator::types() as $resource) {
             <th>Expiry date</th>
         </tr>
         <?
-        foreach (ResourceAdministrator::all() as $row) {
-            $expiry = gmdate("Y-m-d", $row->expires);
-            print "<tr><td><a href='/show_resources.php?service_id={$row->service_id}'>{$row->service_name}</a></td><td>{$row->account_nickname}</td><td>{$row->resource_type}</td><td>{$row->resource_uri}</td><td>$expiry</td></tr>";
+        foreach (ResourceAdministrator::all($expiry_selected, $service_selected, $resource_type_selected) as $row) {
+            $expiry = $row->expires === null ? "None" : gmdate("Y-m-d", $row->expires);
+            print "<tr><td><a href='show_resources.php?service_id={$row->service_id}'>{$row->service_name}</a></td><td>{$row->account_nickname}</td><td>{$row->resource_type}</td><td>{$row->resource_uri}</td><td>$expiry</td></tr>";
         }
         ?>
     </table>

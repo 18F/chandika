@@ -52,14 +52,50 @@ class ResourceAdministrator
         return array_keys(self::$types_with_expiry);
     }
 
-    public static function all() {
+    public static function all($expiry_days, $service_id, $resource_type) {
         $results = [];
         $sql = "SELECT s.id AS service_id, s.name AS service_name, a.nickname AS account_nickname, r.resource_type, r.uri AS resource_uri, r.expires
-                  FROM resources r LEFT JOIN services s ON r.service_id = s.id LEFT JOIN accounts a ON s.account_id = a.id";
-        foreach (DB::connection()->query($sql, PDO::FETCH_OBJ) as $row) {
+                  FROM resources r LEFT JOIN services s ON r.service_id = s.id LEFT JOIN accounts a ON s.account_id = a.id WHERE (r.expires > UNIX_TIMESTAMP() OR r.expires IS NULL)";
+        $where = new WhereConstructor(false);
+        $where->addParam("(r.expires IS NULL OR r.expires < (UNIX_TIMESTAMP() + :days))", ":days", $expiry_days * 3600 * 24);
+        $where->addParam("s.id = :service_id", ":service_id", $service_id);
+        $where->addParam("r.resource_type = :resource_type", ":resource_type", $resource_type);
+        $statement = DB::connection()->prepare($sql.$where->where());
+        $statement->execute($where->params());
+        while ($row = $statement->fetch(PDO::FETCH_OBJ)) {
             $results[] = $row;
         }
         return $results;
+    }
+
+}
+
+class WhereConstructor {
+
+    private $params = [];
+    private $where_clause;
+
+    public function __construct($include_where)
+    {
+        $this->where_clause = $include_where ? " WHERE " : " AND ";
+    }
+
+
+    public function addParam($where, $param_name, $param_value) {
+        if (!empty($param_value)) {
+            if (!empty($this->params)) $this->where_clause .= " AND ";
+            $this->where_clause .= $where;
+            $this->params[$param_name] = $param_value;
+        }
+    }
+
+    public function where() {
+        if (empty($this->params)) return "";
+        return $this->where_clause;
+    }
+
+    public function params() {
+        return $this->params;
     }
 }
 ?>

@@ -25,7 +25,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand page-scroll"
-               href="#page-top">Ambika</a>
+               href="index.php">Ambika</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
