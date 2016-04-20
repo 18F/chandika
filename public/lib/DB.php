@@ -40,6 +40,8 @@ class DB
                           account_id  INT NOT NULL,
                           repository  VARCHAR(255) NOT NULL,
                           url         VARCHAR(255) NOT NULL,
+                          owner       VARCHAR(255) NOT NULL,
+                          verified    INT NULL,
                           created     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                           PRIMARY KEY(id))");
         self::$conn->exec("CREATE TABLE IF NOT EXISTS resources (

@@ -43,6 +43,9 @@
                 <li>
                     <a class="page-scroll" href="show_accounts.php">Accounts</a>
                 </li>
+                <li>
+                    <a class="page-scroll" href="show_administrators.php">Admins</a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

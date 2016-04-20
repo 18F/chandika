@@ -26,7 +26,9 @@ include "header.php";
     </table>
     <hr/>
     <h2>Add resource</h2>
-    <form action="add_resource.php" method="POST"/>
+    <p>For AWS resources, please use the <a href="http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">ARN</a> as the URL.
+    The account id for this service is '<?= $resources->account_identifier()?>'</p>
+    <form action="add_resource.php" method="POST">
     <input type="hidden" name="action" value="CREATE"/>
     <input type="hidden" name="service_id" value="<?= $service_id?>"/>
     <label for="resource_type">Resource type</label> <select name="resource_type">

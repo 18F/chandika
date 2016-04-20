@@ -23,7 +23,7 @@ include "header.php";
     </table>
     <hr/>
     <h2>Add account</h2>
-    <form action="add_account.php" method="POST"/>
+    <form action="add_account.php" method="POST">
     <input type="hidden" name="action" value="CREATE"/>
     <label for="nickname">Nickname</label> <input type="text" name="nickname" id="nickname"/><br/>
     <label for="provider">Provider</label> <select name="provider">

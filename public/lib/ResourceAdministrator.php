@@ -3,14 +3,18 @@ class ResourceAdministrator
 {
     private $service_id;
     private $service_name;
+    private $account_identifier;
+
     private static $types_with_expiry = [ "AWS resource" => [ "prod" => 365, "non-prod" => 30 ], "IAA" => [], "HTTPS certificate" => [], "Domain name" => [] ];
 
     public function __construct($service_id)
     {
         $this->service_id = $service_id;
-        $query = DB::connection()->prepare("SELECT name FROM services WHERE id = ?");
+        $query = DB::connection()->prepare("SELECT s.name, a.identifier FROM services s LEFT JOIN accounts a ON s.account_id = a.id WHERE s.id = ?");
         $query->execute(array($service_id));
-        $this->service_name = $query->fetch(PDO::FETCH_OBJ)->name;
+        $row = $query->fetch(PDO::FETCH_OBJ);
+        $this->service_name = $row->name;
+        $this->account_identifier = $row->identifier;
     }
 
     public function resources()
@@ -66,6 +70,11 @@ class ResourceAdministrator
             $results[] = $row;
         }
         return $results;
+    }
+
+    public function account_identifier()
+    {
+        return $this->account_identifier;
     }
 
 }
