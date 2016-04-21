@@ -11,4 +11,9 @@ Vagrant.configure("2") do |config|
     # Optional NFS. Make sure to remove other synced_folder line too
     #config.vm.synced_folder ".", "/var/www", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
 
+    config.vm.provision "shell", inline: <<-SHELL
+      sudo bash -c \'echo export CHANDIKA_OAUTH_URL="https://alpha.my.usa.gov/" >> /etc/apache2/envvars\'
+
+      sudo service apache2 restart
+SHELL
 end
