@@ -1,5 +1,6 @@
 {
   "require": {
-    "league/oauth2-client": "*"
+    "guzzlehttp/guzzle": "6.*",
+    "php": "5.6.*"
   }
 }

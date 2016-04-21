@@ -9,7 +9,7 @@
 <body>
 <div style="vertical-align: middle;text-align: center;">
     <h1>Log in to Chandika</h1>
-    <p><a href="<?=getenv("CHANDIKA_OAUTH_URL")?>users/sign_in?client_id=<?=getenv("CHANDIKA_OAUTH_CLIENT_ID")?>/" class="btn btn-social btn-myusa">Connect with MyUSA</a></p>
+    <p><a href="<?=getenv("CHANDIKA_OAUTH_URL")?>users/sign_in?client_id=<?=getenv("CHANDIKA_OAUTH_CLIENT_ID")?>" class="btn btn-social btn-myusa">Connect with MyUSA</a></p>
 </div>
 </body>
 </html>
