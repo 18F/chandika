@@ -2,8 +2,8 @@
 spl_autoload_register(function ($class) {
     include 'lib/' . $class . '.php';
 });
+$auth = new Authenticator();
 
-session_start();
 $services = new ServiceAdministrator();
 $name = $_REQUEST["name"];
 $account_id = $_REQUEST["account_id"];

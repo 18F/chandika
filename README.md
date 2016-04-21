@@ -1,10 +1,10 @@
-# Ambika
+# Chandika
 
-Ambika provides information on the resources being used by our services, allows new resources to be created and maintained, and destroys unused resources.
+Chandika provides information on the resources being used by our services, allows new resources to be created and maintained, and destroys unused resources.
 
 ## Developing and testing locally
 
-Ambika uses [Scotch Box](https://box.scotch.io/) as a testing environment. Check out the code, run `vagrant up`, and hit `192.168.33.20`.
+Chandika uses [Scotch Box](https://box.scotch.io/) as a testing environment. Check out the code, run `vagrant up`, and hit `192.168.33.20`.
 
 ## Deploying to cloud.gov
 
@@ -14,6 +14,10 @@ Once you've [set up your credentials on cloud.gov](https://docs.cloud.gov/gettin
 cd public
 cf push [appname]
 ```
+
+## The origin of the name Chandika
+
+The demon Raktabija had a superpower that meant that when a drop of his blood hit the ground, a new duplicate Raktabija would be created. Thus when the goddess Kali fought him, every time she wounded him, multiple new Raktabijas would be created. The goddess Chandika helped Kali kill all the clone Raktabijas and eventually killed Raktabija himself. The Chandika app is designed to help you kill the profusion of unused virtual resources that accumulate in a typical cloud environment.
 
 # Public domain
 

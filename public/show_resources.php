@@ -2,7 +2,8 @@
 spl_autoload_register(function ($class) {
     include 'lib/' . $class . '.php';
 });
-session_start();
+$auth = new Authenticator();
+
 $service_id = $_REQUEST["service_id"];
 $resources = new ResourceAdministrator($service_id);
 include "header.php";

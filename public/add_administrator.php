@@ -2,8 +2,8 @@
 spl_autoload_register(function ($class) {
     include 'lib/' . $class . '.php';
 });
+$auth = new Authenticator();
 
-session_start();
 $users = new UserAdministrator();
 switch ($_REQUEST["action"]) {
     case "CREATE":
