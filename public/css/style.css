@@ -106,25 +106,6 @@ label {
     padding-top: 20px;
 }
 
-.connectedSortable {
-    border: 1px solid black;
-    width: 252px;
-    min-height: 20px;
-    list-style-type: none;
-    margin: 0;
-    padding: 5px 0 0 0;
-    float: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
-.connectedSortable li {
-    margin: 0 5px 5px 5px;
-    padding: 5px;
-    font-size: 1.2em;
-    width: 235px;
-}
-
 .btn-social {
     display: inline-block;
     font-weight: 400;
@@ -141,11 +122,41 @@ label {
     -ms-user-select: none;
     user-select: none;
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-    text-decoration: none
+    text-decoration: none;
     padding: 0 10px 0 0;
     margin-bottom: 15px;
-    line-height: 2.2em
+    line-height: 2.2em;
     background-color: #1E6586;
     border-color: #00495C;
     color: #F9F9F9
+}
+
+.btn-social:active:focus, .btn-social:focus {
+    outline: dotted thin;
+    outline: -webkit-focus-ring-color auto 5px;
+    outline-offset: -2px
+}
+
+.btn-social:active {
+    outline: 0;
+    background-image: none;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    color: #fff
+}
+
+.btn-social:before {
+    font-family: FontAwesome;
+    content: "\f09b";
+    border-right: .075em solid rgba(0, 0, 0, .15);
+    float: left;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    font-size: 120%;
+    margin: 0 .5em 0 0;
+    padding: 0 .5em
+}
+
+.btn-social:focus, .btn-social:hover {
+    background-color: #00495C;
+    color: #fff
 }

@@ -25,7 +25,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand page-scroll"
-               href="index.php">Chandika</a> <?if (isset($_SESSION["user_email"])) {?><p class="navbar-brand">You are logged in as <?= $_SESSION["user_email"]?> | <a href="/login.php?logout=true">Logout</a></p><?}?>
+               href="index.php">Chandika</a> <?if (isset($_SESSION["user_email"])) {?><p style="font-size:50%" class="navbar-brand">You are logged in as <?= $_SESSION["user_email"]?> | <a href="/login.php?logout=true">Logout</a></p><?}?>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
