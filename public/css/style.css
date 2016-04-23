@@ -9,7 +9,7 @@
 
     input[type="text"] {
         width: 400px;
-	    margin-top: 20px;
+        margin-top: 20px;
     }
 
     select {
@@ -103,7 +103,7 @@ th {
 label {
     display: block;
     padding-right: 5px;
-    padding-top:20px;
+    padding-top: 20px;
 }
 
 .connectedSortable {
@@ -123,4 +123,29 @@ label {
     padding: 5px;
     font-size: 1.2em;
     width: 235px;
+}
+
+.btn-social {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    font-size: 16px;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    text-decoration: none
+    padding: 0 10px 0 0;
+    margin-bottom: 15px;
+    line-height: 2.2em
+    background-color: #1E6586;
+    border-color: #00495C;
+    color: #F9F9F9
 }

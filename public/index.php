@@ -21,7 +21,6 @@ foreach (ResourceAdministrator::types() as $resource) {
 ?>
 <section id="main">
     <h1>Resources</h1>
-    <p>You are logged in as <?=$_SESSION["user_email"]?>;</p>
     <form action="index.php" method="get">
         Filter by:
         <em>expiry date: <?= $filter->dropdown("expiry", ["7" => "7 days", "30" => "30 days", "365" => "1 year", "" => "all"], $expiry_selected)?></em>
