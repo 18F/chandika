@@ -5,10 +5,14 @@ use GuzzleHttp\Exception\RequestException;
 
 class Authenticator
 {
+    const administrator = 1;
     private $user_email;
+    private $administrators = [];
 
     public function __construct()
     {
+        $user_administrators = new UserAdministrator();
+        array_walk($user_administrators->users(), function($value, $key) {$this->administrators[] = $value->email;});
         $oauth = getenv("CHANDIKA_OAUTH");
         if ($oauth != "OFF") {
             session_start();
@@ -64,5 +68,21 @@ class Authenticator
         $token["client_secret"] = getenv("CHANDIKA_OAUTH_CLIENT_SECRET");
         $token["code"] = $code;
         return http_build_query($token);
+    }
+
+    public function assertRole($role) {
+        $oauth = getenv("CHANDIKA_OAUTH");
+        if ($role != Authenticator::administrator || $oauth == "OFF") {
+            return true;
+        }
+        if (!in_array($_SESSION["user_email"], $this->administrators)) {
+            header("location: /index.php");
+            die();
+        }
+        return true;
+    }
+
+    public function belongsTo($role) {
+        return ($role == Authenticator::administrator) && in_array($_SESSION["user_email"], $this->administrators);
     }
 }

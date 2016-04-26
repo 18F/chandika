@@ -40,12 +40,14 @@
                 <li>
                     <a class="page-scroll" href="show_services.php">Services</a>
                 </li>
+                <? if ($auth->belongsTo(Authenticator::administrator)) {?>
                 <li>
                     <a class="page-scroll" href="show_accounts.php">Accounts</a>
                 </li>
                 <li>
                     <a class="page-scroll" href="show_administrators.php">Admins</a>
                 </li>
+                <?}?>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
