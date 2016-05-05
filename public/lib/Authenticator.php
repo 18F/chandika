@@ -83,6 +83,8 @@ class Authenticator
     }
 
     public function belongsTo($role) {
+        $oauth = getenv("CHANDIKA_OAUTH");
+        if ($oauth == "OFF") return true;
         return ($role == Authenticator::administrator) && in_array($_SESSION["user_email"], $this->administrators);
     }
 }
