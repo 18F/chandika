@@ -11,7 +11,7 @@ include "header.php";
     <h1>Accounts</h1>
     <table class="table-striped">
         <tr>
-            <th>Nickname</th>
+            <th>Label</th>
             <th>Provider</th>
             <th>Identifier</th>
         </tr>
@@ -26,7 +26,7 @@ include "header.php";
     <h2>Add account</h2>
     <form action="add_account.php" method="POST">
     <input type="hidden" name="action" value="CREATE"/>
-    <label for="nickname">Nickname</label> <input type="text" name="nickname" id="nickname"/><br/>
+    <label for="nickname">Label</label> <input type="text" name="nickname" id="nickname"/><br/>
     <label for="provider">Provider</label> <select name="provider">
         <? foreach ($accounts->providers() as $name) {
             print "<option value='$name'>$name</option>";

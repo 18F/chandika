@@ -1,7 +1,5 @@
 <?
-spl_autoload_register(function ($class) {
-    include 'lib/' . $class . '.php';
-});
+spl_autoload_register(function ($class) { include 'lib/' . $class . '.php'; });
 $auth = new Authenticator();
 
 include "header.php";
@@ -30,7 +28,7 @@ include "header.php";
     <h2>Add service</h2>
     <form action="add_service.php" method="POST">
     <input type="hidden" name="action" value="CREATE"/>
-    <label for="name">Nickname</label> <input type="text" name="name" id="name"/><br/>
+    <label for="name">Name</label> <input type="text" name="name" id="name"/><br/>
     <label for="owner">Owner's email id</label> <input type="text" name="owner" id="owner"/><br/>
     <label for="account">Account</label> <select name="account_id">
         <? foreach ($accounts->accounts() as $account) {
