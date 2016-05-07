@@ -38,7 +38,7 @@
                     <a class="page-scroll" href="index.php">Home</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="show_services.php">Services</a>
+                    <a class="page-scroll" href="show_services.php">Systems</a>
                 </li>
                 <? if ($auth->belongsTo(Authenticator::administrator)) {?>
                 <li>
