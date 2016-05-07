@@ -12,6 +12,10 @@
         margin-top: 20px;
     }
 
+    input[type="submit"] {
+        margin-top: 20px;
+    }
+
     select {
         margin-top: 20px;
     }
