@@ -12,7 +12,7 @@ class Authenticator
     public function __construct()
     {
         $user_administrators = new UserAdministrator();
-        array_walk($user_administrators->users(), function($value, $key) {$this->administrators[] = $value->email;});
+        @array_walk($user_administrators->users(), function($value, $key) {$this->administrators[] = $value->email;});
         $oauth = getenv("CHANDIKA_OAUTH");
         if ($oauth != "OFF") {
             session_start();

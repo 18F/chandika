@@ -15,44 +15,30 @@ class DB
                 self::$conn = new PDO($connection_string, $cf_config_decoded["aws-rds"][0]["credentials"]["username"], $cf_config_decoded["aws-rds"][0]["credentials"]["password"]);
             }
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            self::createSchema();
         }
         return self::$conn;
     }
 
-    private static function createSchema() {
-        self::$conn->exec("CREATE TABLE IF NOT EXISTS administrators (
+    public static function migrate() {
+        self::$conn->exec("CREATE TABLE IF NOT EXISTS migrations (
                           id          INT NOT NULL AUTO_INCREMENT,
-                          email       VARCHAR(50) NOT NULL,
-                          created     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          migration   VARCHAR(10) NOT NULL,
                           PRIMARY KEY(id))");
-        self::$conn->exec("CREATE TABLE IF NOT EXISTS accounts (
-                          id          INT NOT NULL AUTO_INCREMENT,
-                          nickname    VARCHAR(50) NOT NULL,
-                          provider    VARCHAR(50) NOT NULL,
-                          identifier  VARCHAR(255) NOT NULL,
-                          is_prod     TINYINT NOT NULL DEFAULT 0,
-                          created     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                          PRIMARY KEY(id))");
-        self::$conn->exec("CREATE TABLE IF NOT EXISTS services (
-                          id          INT NOT NULL AUTO_INCREMENT,
-                          name        VARCHAR(255) NOT NULL,
-                          account_id  INT NOT NULL,
-                          repository  VARCHAR(255) NOT NULL,
-                          url         VARCHAR(255) NOT NULL,
-                          owner       VARCHAR(255) NOT NULL,
-                          verified    INT NULL,
-                          created     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                          PRIMARY KEY(id))");
-        self::$conn->exec("CREATE TABLE IF NOT EXISTS resources (
-                          id          INT NOT NULL AUTO_INCREMENT,
-                          service_id  INT NOT NULL,
-                          resource_type        VARCHAR(50) NOT NULL,
-                          owner       VARCHAR(255) NOT NULL,
-                          uri         VARCHAR(50) NOT NULL,
-                          created     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                          expires     INT NULL,
-                          PRIMARY KEY(id))");
+        $sql = "SELECT migration FROM migrations ORDER BY id DESC";
+        $migrated = [];
+        foreach (DB::connection()->query($sql, PDO::FETCH_OBJ) as $row) {
+            $migrated[] = $row->migration;
+        }
+        $migrations = scandir("lib/migrations");
+        foreach ($migrations as $migration) {
+            if (substr($migration, 0, 1) == "m" && !in_array($migration, $migrated)) {
+                $classname = substr($migration, 0, -4);
+                include "lib/migrations/$migration";
+                $migrate = new $classname;
+                $migrate->migrate(self::$conn);
+                self::$conn->exec("INSERT INTO migrations (migration) VALUES ('$migration')");
+            }
+        }
     }
 }
 ?>
