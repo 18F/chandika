@@ -15,6 +15,8 @@ class DB
                 self::$conn = new PDO($connection_string, $cf_config_decoded["aws-rds"][0]["credentials"]["username"], $cf_config_decoded["aws-rds"][0]["credentials"]["password"]);
             }
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = self::$conn->query("SHOW TABLES LIKE 'migrations'");
+            if ($stmt->rowCount() == 0) self::migrate();
         }
         return self::$conn;
     }

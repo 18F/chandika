@@ -5,6 +5,10 @@ spl_autoload_register(function ($class) {
 $auth = new Authenticator();
 $auth->assertRole(Authenticator::administrator);
 
+if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "Migrate DB") {
+    DB::migrate();
+}
+
 include "header.php";
 ?>
 <section id="main">
@@ -29,6 +33,11 @@ include "header.php";
     <label for="email">Email</label> <input type="text" name="email" id="email"/><br/>
     <input type="Submit" value="Add"/>
     </form>
+    <hr />
+    <h2>Migrate DB</h2>
+    <p>Run this after upgrading Chandika</p>
+    <form action="show_administrators.php"><input type="submit" name="action" value="Migrate DB"/></form>
+
 </section>
 </body>
 </html>
