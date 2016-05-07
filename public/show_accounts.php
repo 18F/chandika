@@ -28,7 +28,7 @@ include "header.php";
     <form action="add_account.php" method="POST">
         <input type="hidden" name="action" value="CREATE"/>
         <label for="nickname">Label</label> <input type="text" name="nickname" id="nickname"/><br/>
-        <label for="provider">Provider</label> <?= Select::render("provider", AccountAdministrator::providers(), 0) ?><br/>
+        <label for="provider">Provider</label> <?= Filter::dropdown("provider", AccountAdministrator::providers(), 0) ?><br/>
         <label for="identifier">Identifier</label> <input type="text" name="identifier" id="identifier"/><br/>
         <label for="email">Notification email</label> <input type="text" name="email" id="email"/><br/>
         <input type="Submit" value="Add"/>

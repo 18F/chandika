@@ -1,7 +1,7 @@
 <?
 class Filter
 {
-    public function dropdown($name, $values, $selected) {
+    public static function dropdown($name, $values, $selected) {
         $dropdown = "<select name='$name'>";
         foreach ($values as $key => $label) {
             $selected_text = $key == $selected ? " selected" : "";

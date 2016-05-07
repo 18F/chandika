@@ -5,7 +5,6 @@ spl_autoload_register(function ($class) {
 $auth = new Authenticator();
 
 include "header.php";
-$filter = new Filter();
 $expiry_selected = isset($_REQUEST["expiry"]) ? $_REQUEST["expiry"] : "7";
 $service_selected = isset($_REQUEST["service"]) ? $_REQUEST["service"] : "";
 $resource_type_selected = isset($_REQUEST["resource_type"]) ? $_REQUEST["resource_type"] : "";
@@ -23,9 +22,9 @@ foreach (ResourceAdministrator::types() as $resource) {
     <h1>Resources</h1>
     <form action="index.php" method="get">
         Filter by:
-        <em>expiry date: <?= $filter->dropdown("expiry", ["7" => "7 days", "30" => "30 days", "365" => "1 year", "" => "all"], $expiry_selected)?></em>
-        <em>service: <?= $filter->dropdown("service", $services, $service_selected)?></em>
-        <em>resource type: <?= $filter->dropdown("resource_type", $resource_types, $resource_type_selected)?></em>
+        <em>expiry date: <?= Filter::dropdown("expiry", ["7" => "7 days", "30" => "30 days", "365" => "1 year", "" => "all"], $expiry_selected)?></em>
+        <em>service: <?= Filter::dropdown("service", $services, $service_selected)?></em>
+        <em>resource type: <?= Filter::dropdown("resource_type", $resource_types, $resource_type_selected)?></em>
         <input type="submit" value="Filter">
     </form>
     <table class="table-striped">
