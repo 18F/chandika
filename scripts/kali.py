@@ -24,9 +24,9 @@ unexpired = response.read().decode("utf-8").split("\n")
 if args.aws_key and args.aws_secret_key:
     session = boto3.Session(aws_access_key_id=args.aws_key, aws_secret_access_key=args.aws_secret_key)
 
-s3client = boto3.client('s3')
+s3client = session.client('s3')
 s3buckets = s3client.list_buckets()
 for bucket in s3buckets['Buckets']:
     if bucket['Name'] not in unexpired:
-        print(bucket['Name'])
+        print("s3://" + bucket['Name'])
     
