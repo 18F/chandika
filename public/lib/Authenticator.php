@@ -8,6 +8,7 @@ class Authenticator
     const administrator = 1;
     private $user_email;
     private $administrators = [];
+    private $http_client;
 
     public function __construct()
     {
@@ -18,10 +19,10 @@ class Authenticator
             session_start();
             if (!isset($_SESSION["user_email"])) {
                 if (isset($_REQUEST["code"])) {
-                    $http_client = new GuzzleHttp\Client(["base_uri" => "https://github.com"]);
+                    $this->http_client = new GuzzleHttp\Client(["base_uri" => "https://github.com"]);
                     $oauth_request_token = $this->oauth_request_token($_REQUEST["code"]);
                     try {
-                        $response = $http_client->request("POST", "/login/oauth/access_token", ['body' => $oauth_request_token]);
+                        $response = $this->http_client->request("POST", "/login/oauth/access_token", ['body' => $oauth_request_token]);
                     } catch (RequestException $e) {
                         error_log($e->getResponse()->getBody());
                         header("location: /login.php?error=OAuth%20Error");
@@ -31,7 +32,7 @@ class Authenticator
                     $_SESSION["oauth_token"] = $token["access_token"];
 
                     try {
-                        $response = $http_client->request("GET", "https://api.github.com/user?access_token=".$token["access_token"]);
+                        $response = $this->http_client->request("GET", "https://api.github.com/user?access_token=".$token["access_token"]);
                     } catch (RequestException $e) {
                         error_log($e->getResponse()->getBody());
                         header("location: /login.php?error=OAuth%20Error");
@@ -40,7 +41,7 @@ class Authenticator
                     $profile_data = json_decode($response->getBody(), true);
 
                     try {
-                        $response = $http_client->request("GET", "https://api.github.com/user/orgs?access_token=".$token["access_token"]);
+                        $response = $this->http_client->request("GET", "https://api.github.com/user/orgs?access_token=".$token["access_token"]);
                     } catch (RequestException $e) {
                         error_log($e->getResponse()->getBody());
                         header("location: /login.php?error=OAuth%20Error");
@@ -54,8 +55,8 @@ class Authenticator
                     }
 
                     $orgs = getenv("CHANDIKA_OAUTH_ORGS");
-                    if ($orgs !== false && count(array_intersect($my_orgs, explode(",", $orgs))) > 0) {
-                        $error = urlencode("Must be a member of an approved organization: ".$response->getBody());
+                    if ($orgs !== false && count(array_intersect($my_orgs, explode(",", $orgs))) == 0) {
+		      $error = urlencode("Must be a member of an approved organization.");
                         header("location: /login.php?error=".$error);
                         die();
                     }
@@ -103,5 +104,17 @@ class Authenticator
         $oauth = getenv("CHANDIKA_OAUTH");
         if ($oauth == "OFF") return true;
         return ($role == Authenticator::administrator) && in_array($_SESSION["user_email"], $this->administrators);
+    }
+
+    public function http_request($method, $uri, $data)
+    {
+      try {
+	$response = $this->http_client->request($method, $uri, $data);
+      } catch (RequestException $e) {
+	error_log($e->getResponse()->getBody());
+	header("location: /login.php?error=OAuth%20Error");
+	die();
+      }
+      return $response->getBody();
     }
 }
