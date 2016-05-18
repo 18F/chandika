@@ -55,7 +55,8 @@ class Authenticator
 
                     $orgs = getenv("CHANDIKA_OAUTH_ORGS");
                     if ($orgs !== false && count(array_intersect($my_orgs, explode(",", $orgs))) > 0) {
-                        header("location: /login.php?error=Must%20be%20a%20member%20of%20an%20approved%organization.");
+                        $error = urlencode("Must be a member of an approved organization: ".$response->getBody());
+                        header("location: /login.php?error=".$error);
                         die();
                     }
                     if (isset($profile_data["email"])) {
