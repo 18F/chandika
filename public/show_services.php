@@ -34,7 +34,7 @@ include "header.php";
     <h2>Add system</h2>
     <form action="add_service.php" method="POST">
         <input type="hidden" name="action" value="CREATE"/>
-        <label for="name">Name</label> <input type="text" name="name" id="name"/><br/>
+        <label for="name">System name</label> <input type="text" name="name" id="name"/><br/>
         <label for="owner">Owner's email id</label> <input type="text" name="owner" id="owner"/><br/>
         <label for="account">Account</label> <?= Filter::dropdown("account_id", $accounts, 0)?><br/>
         <label for="repository">GitHub repo</label> <input type="text" name="repository" id="repository"/><br/>

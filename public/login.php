@@ -15,7 +15,8 @@ if (isset($_REQUEST["logout"])) {
 <body>
 <div style="vertical-align: middle;text-align: center;">
     <h1>Log in to Chandika</h1>
-    <p><a href="https://github.com/login/oauth/authorize?scope=user%25email,user%25company&client_id=<?=getenv("CHANDIKA_OAUTH_CLIENT_ID")?>" class="btn-social">Sign in with GitHub</a></p>
+    <?if (isset($_REQUEST["error"])) {?><p style="color:red"><?=$_REQUEST["error"]?></p><?}?>
+    <p><a href="https://github.com/login/oauth/authorize?scope=user&client_id=<?=getenv("CHANDIKA_OAUTH_CLIENT_ID")?>" class="btn-social">Sign in with GitHub</a></p>
 </div>
 </body>
 </html>

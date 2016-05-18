@@ -29,6 +29,7 @@ class Authenticator
                     }
                     parse_str($response->getBody(), $token);
                     $_SESSION["oauth_token"] = $token["access_token"];
+
                     try {
                         $response = $http_client->request("GET", "https://api.github.com/user?access_token=".$token["access_token"]);
                     } catch (RequestException $e) {
@@ -37,8 +38,23 @@ class Authenticator
                         die();
                     }
                     $profile_data = json_decode($response->getBody(), true);
+
+                    try {
+                        $response = $http_client->request("GET", "https://api.github.com/user/orgs?access_token=".$token["access_token"]);
+                    } catch (RequestException $e) {
+                        error_log($e->getResponse()->getBody());
+                        header("location: /login.php?error=OAuth%20Error");
+                        die();
+                    }
+                    $org_data = json_decode($response->getBody(), true);
+                    $my_orgs = [];
+
+                    foreach ($org_data as $org) {
+                        $my_orgs[] = $org["login"];
+                    }
+
                     $orgs = getenv("CHANDIKA_OAUTH_ORGS");
-                    if ($orgs !== false && !in_array($profile_data["company"], explode(",", $orgs))) {
+                    if ($orgs !== false && count(array_intersect($my_orgs, explode(",", $orgs))) > 0) {
                         header("location: /login.php?error=Must%20be%20a%20member%20of%20an%20approved%organization.");
                         die();
                     }

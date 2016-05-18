@@ -20,7 +20,7 @@ include "header.php";
     <h1>Edit system</h1>
     <form action="edit_service.php" method="POST">
         <input type="hidden" name="service_id" value="<?= $service_id?>"/>
-        <label for="name">Name</label> <input type="text" name="name" id="name" value="<?= $service->name?>"/><br/>
+        <label for="name">System name</label> <input type="text" name="name" id="name" value="<?= $service->name?>"/><br/>
         <label for="owner">Owner's email id</label> <input type="text" name="owner" id="owner" value="<?= $service->owner?>"/><br/>
         <label for="account">Account</label> <?= Filter::dropdown("account_id", $accounts, $service->account_id)?><br/>
         <label for="repository">GitHub repo</label> <input type="text" name="repository" id="repository" value="<?= $service->repository?>"/><br/>
