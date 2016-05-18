@@ -21,35 +21,15 @@ class Authenticator
                 if (isset($_REQUEST["code"])) {
                     $this->http_client = new GuzzleHttp\Client(["base_uri" => "https://github.com"]);
                     $oauth_request_token = $this->oauth_request_token($_REQUEST["code"]);
-                    try {
-                        $response = $this->http_client->request("POST", "/login/oauth/access_token", ['body' => $oauth_request_token]);
-                    } catch (RequestException $e) {
-                        error_log($e->getResponse()->getBody());
-                        header("location: /login.php?error=OAuth%20Error");
-                        die();
-                    }
-                    parse_str($response->getBody(), $token);
+
+		    parse_str($this->http_request("POST", "/login/oauth/access_token", ['body' => $oauth_request_token]), $token);
                     $_SESSION["oauth_token"] = $token["access_token"];
 
-                    try {
-                        $response = $this->http_client->request("GET", "https://api.github.com/user?access_token=".$token["access_token"]);
-                    } catch (RequestException $e) {
-                        error_log($e->getResponse()->getBody());
-                        header("location: /login.php?error=OAuth%20Error");
-                        die();
-                    }
-                    $profile_data = json_decode($response->getBody(), true);
+                    $profile_data = json_decode($this->http_request("GET", "https://api.github.com/user?access_token=".$token["access_token"], []), true);
 
-                    try {
-                        $response = $this->http_client->request("GET", "https://api.github.com/user/orgs?access_token=".$token["access_token"]);
-                    } catch (RequestException $e) {
-                        error_log($e->getResponse()->getBody());
-                        header("location: /login.php?error=OAuth%20Error");
-                        die();
-                    }
-                    $org_data = json_decode($response->getBody(), true);
+                    $org_data = json_decode($this->http_request("GET", "https://api.github.com/user/orgs?access_token=".$token["access_token"], []), true);
+
                     $my_orgs = [];
-
                     foreach ($org_data as $org) {
                         $my_orgs[] = $org["login"];
                     }
