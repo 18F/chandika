@@ -51,6 +51,13 @@ class ResourceAdministrator
         $insert->execute();
     }
 
+    public static function delete($id)
+    {
+      $delete = DB::connection()->prepare("DELETE FROM resources WHERE id = :id");
+      $delete->bindParam(':id', $id);
+      $delete->execute();
+    }
+
     public static function types()
     {
         return array_keys(self::$types_with_expiry);

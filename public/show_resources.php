@@ -17,11 +17,12 @@ include "header.php";
             <th>URI</th>
             <th>Created</th>
             <th>Expires</th>
+            <th>Action</th>
         </tr>
         <?
         foreach ($resources->resources() as $row) {
             $expiry = gmdate("Y-m-d", $row->expires);
-            print "<tr><td>{$row->resource_type}</td><td>{$row->owner}</td><td>{$row->uri}</td><td>{$row->created}</td><td>$expiry</td></tr>";
+            print "<tr><td>{$row->resource_type}</td><td>{$row->owner}</td><td>{$row->uri}</td><td>{$row->created}</td><td>$expiry</td><td><a href='add_resource.php?action=DELETE&id={$row->id}&service_id=$service_id'>Delete</a></td></tr>";
         }
         ?>
     </table>
