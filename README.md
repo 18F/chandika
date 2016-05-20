@@ -1,6 +1,6 @@
 # Chandika
 
-Chandika provides information on the resources being used by our services, allows new resources to be created and maintained, and destroys unused resources.
+Chandika provides information on the resources being used by our services, allows new resources to be created and maintained, and is intended to be used with [Raktabija](https://github.com/18F/raktabija) to destroy unused resources.
 
 ## Developing and testing locally
 
