@@ -10,7 +10,8 @@ if ($_REQUEST["action"] == "CREATE") {
   $resources = new ResourceAdministrator($service_id);
   $uri = $_REQUEST["uri"];
   $resource_type = $_REQUEST["resource_type"];
-  $resources->create($resource_type, $_SESSION["user_email"], $uri, time());
+  $creator = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Nobody";
+  $resources->create($resource_type, $creator, $uri, time());
 }
 if ($_REQUEST["action"] == "DELETE") {
   ResourceAdministrator::delete($_REQUEST["id"]);
