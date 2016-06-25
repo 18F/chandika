@@ -11,14 +11,12 @@ $account["Name"] = $row->nickname;
 $account["Production"] = $row->is_prod ? "1" : "0";
 $account["Provider"] = $row->provider;
 
-$statement = DB::connection()->prepare("SELECT s.tag, s.id, s.name FROM services s JOIN accounts a ON s.account_id = a.id
+$statement = DB::connection()->prepare("SELECT s.tag, s.id, s.name, s.repository FROM services s JOIN accounts a ON s.account_id = a.id
         WHERE a.identifier = :account");
 $statement->execute([":account" => $account_id]);
-$tags = [];
-$names = [];
+$service_info = [];
 while ($row = $statement->fetch(PDO::FETCH_OBJ)) {
-    $tags[$row->id] = $row->tag;
-    $names[$row->id] = $row->name;
+    $service_info[$row->id] = $row;
 }
 
 $statement = DB::connection()->prepare("SELECT r.uri, r.resource_type, s.id FROM services s JOIN accounts a ON s.account_id = a.id JOIN resources r ON r.service_id = s.id
@@ -44,9 +42,9 @@ if ($statement->rowCount() > 0) {
     $services[$service_id] = $resources;
 }
 $service_json = [];
-foreach ($tags as $service_id => $tag) {
+foreach ($service_info as $service_id => $info) {
     $resources = !array_key_exists($service_id, $services) || empty($services[$service_id]) ? [] : $services[$service_id];
-    $service_json[] = [ "Name" => $names[$service_id], "Tag" => $tag, "Resources" => $resources ];
+    $service_json[] = [ "Name" => $info->name, "Tag" => $info->tag, "Repository" => $info->repository , "Resources" => $resources ];
 }
 $account["Services"] = $service_json;
 print json_encode($account);
