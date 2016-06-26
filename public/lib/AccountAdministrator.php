@@ -3,7 +3,7 @@ class AccountAdministrator
 {
     public static function providers()
     {
-        return [ "Amazon AWS" ];
+        return [ "0" => "Amazon AWS" ];
     }
 
     public static function accounts()

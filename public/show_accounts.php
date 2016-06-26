@@ -19,7 +19,8 @@ include "header.php";
         </tr>
         <?
         foreach (AccountAdministrator::accounts() as $row) {
-            print "<tr><td>{$row->nickname}</td><td>{$row->provider}</td><td>{$row->identifier}</td><td>{$row->email}</td><td><a href='edit_account.php?account_id={$row->id}'>Edit</a></td></tr>";
+            $provider = AccountAdministrator::providers()[$row->provider];
+            print "<tr><td>{$row->nickname}</td><td>$provider</td><td>{$row->identifier}</td><td>{$row->email}</td><td><a href='edit_account.php?account_id={$row->id}'>Edit</a></td></tr>";
         }
         ?>
     </table>

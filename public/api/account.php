@@ -9,7 +9,7 @@ $statement->execute([":account" => $account_id]);
 $row = $statement->fetch(PDO::FETCH_OBJ);
 $account["Name"] = $row->nickname;
 $account["Production"] = $row->is_prod ? "1" : "0";
-$account["Provider"] = $row->provider;
+$account["Provider"] = AccountAdministrator::providers()[$row->provider];
 
 $statement = DB::connection()->prepare("SELECT s.tag, s.id, s.name, s.repository FROM services s JOIN accounts a ON s.account_id = a.id
         WHERE a.identifier = :account");
