@@ -46,6 +46,6 @@ foreach ($service_info as $service_id => $info) {
     $resources = !array_key_exists($service_id, $services) || empty($services[$service_id]) ? [] : $services[$service_id];
     $service_json[] = [ "Name" => $info->name, "Tag" => $info->tag, "Repository" => $info->repository , "Resources" => $resources ];
 }
-$account["Services"] = $service_json;
+$account["Systems"] = $service_json;
 print json_encode($account);
 ?>
