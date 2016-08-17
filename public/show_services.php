@@ -18,15 +18,14 @@ include "header.php";
             <th>GitHub repo</th>
             <th>System URL</th>
             <th>Owner</th>
-            <th>Billable?</th>
+            <th>Billing code</th>
             <th>Infrastructure Tag</th>
             <th>Actions</th>
         </tr>
         <?
         foreach (ServiceAdministrator::services() as $row) {
-            $billable = $row->is_billable == 1 ? "Yes" : "No";
             print "<tr><td>{$row->name}</td><td>{$row->nickname}</td><td>{$row->repository}</td><td>{$row->url}</td><td>{$row->owner}</td>
-                   <td>$billable</td><td>{$row->tag}</td><td><a href='edit_service.php?service_id={$row->id}'>Edit</a> |
+                   <td>{$row->billing_code}</td><td>{$row->tag}</td><td><a href='edit_service.php?service_id={$row->id}'>Edit</a> |
                    <a href='show_resources.php?service_id={$row->id}'>Resources</a></td></tr>";
         }
         ?>
@@ -41,7 +40,7 @@ include "header.php";
         <label for="repository">GitHub repo</label> <input type="text" name="repository" id="repository"/><br/>
         <label for="url">Service URL</label> <input type="text" name="url" id="url"/><br>
         <label for="tag">Infrastructure Tag</label> <input type="text" name="tag" id="tag"/><br/>
-        <label for="billable">Who will pay the costs associated with operating this system?</label> <?= Filter::dropdown("is_billable", [ "0" => "TTS (operating expense)", "1" => "Another agency (cost of goods sold)"], 1)?><br/>
+        <label for="billing_code">Billing code (TOCK)</label> <input type="text" name="billing_code" id="billing_code"/><br/>
         <input type="submit" name="action" value="Add"/>
     </form>
 </section>
