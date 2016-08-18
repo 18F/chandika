@@ -5,7 +5,7 @@ spl_autoload_register(function ($class) {
 $auth = new Authenticator();
 
 $accounts = [];
-@array_walk(AccountAdministrator::accounts(), function($value, $key) use (&$accounts) { $accounts[$value->id] = $value->nickname; });
+@array_walk(AccountAdministrator::accounts(), function($value, $key) use (&$accounts) { $accounts[$value->id] = $value->label; });
 
 include "header.php";
 ?>
@@ -24,7 +24,7 @@ include "header.php";
         </tr>
         <?
         foreach (ServiceAdministrator::services() as $row) {
-            print "<tr><td>{$row->name}</td><td>{$row->nickname}</td><td>{$row->repository}</td><td>{$row->url}</td><td>{$row->owner}</td>
+            print "<tr><td>{$row->name}</td><td>{$row->label}</td><td>{$row->repository}</td><td>{$row->url}</td><td>{$row->owner}</td>
                    <td>{$row->billing_code}</td><td>{$row->tag}</td><td><a href='edit_service.php?service_id={$row->id}'>Edit</a> |
                    <a href='show_resources.php?service_id={$row->id}'>Resources</a></td></tr>";
         }

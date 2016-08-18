@@ -38,7 +38,7 @@ foreach (ResourceAdministrator::types() as $resource) {
         <?
         foreach (ResourceAdministrator::all($expiry_selected, $service_selected, $resource_type_selected) as $row) {
             $expiry = $row->expires === null ? "None" : gmdate("Y-m-d", $row->expires);
-            print "<tr><td><a href='show_resources.php?service_id={$row->service_id}'>{$row->service_name}</a></td><td>{$row->account_nickname}</td><td>{$row->resource_type}</td><td>{$row->resource_uri}</td><td>$expiry</td></tr>";
+            print "<tr><td><a href='show_resources.php?service_id={$row->service_id}'>{$row->service_name}</a></td><td>{$row->account_label}</td><td>{$row->resource_type}</td><td>{$row->resource_uri}</td><td>$expiry</td></tr>";
         }
         ?>
     </table>

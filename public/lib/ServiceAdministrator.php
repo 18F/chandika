@@ -5,7 +5,7 @@ class ServiceAdministrator
     public static function services()
     {
         $results = [];
-        $sql = "SELECT s.id, s.name, s.account_id, a.nickname, s.repository, s.url, s.owner, s.billing_code, s.tag
+        $sql = "SELECT s.id, s.name, s.account_id, a.label, s.repository, s.url, s.owner, s.billing_code, s.tag
                   FROM services s LEFT JOIN accounts a ON s.account_id = a.id ORDER BY s.name";
         foreach (DB::connection()->query($sql, PDO::FETCH_OBJ) as $row) {
             $results[] = $row;

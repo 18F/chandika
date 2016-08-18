@@ -4,10 +4,10 @@ spl_autoload_register(function ($class) {
 });
 $account_id = $_REQUEST["account_id"];
 
-$statement = DB::connection()->prepare("SELECT nickname, is_prod, provider FROM accounts WHERE identifier = :account");
+$statement = DB::connection()->prepare("SELECT label, is_prod, provider FROM accounts WHERE identifier = :account");
 $statement->execute([":account" => $account_id]);
 $row = $statement->fetch(PDO::FETCH_OBJ);
-$account["Name"] = $row->nickname;
+$account["Name"] = $row->label;
 $account["Production"] = $row->is_prod ? "1" : "0";
 $account["Provider"] = AccountAdministrator::providers()[$row->provider];
 

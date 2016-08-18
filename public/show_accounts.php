@@ -15,12 +15,13 @@ include "header.php";
             <th>Provider</th>
             <th>Identifier</th>
             <th>Notification email</th>
+            <th>Description</th>
             <th>Actions</th>
         </tr>
         <?
         foreach (AccountAdministrator::accounts() as $row) {
             $provider = AccountAdministrator::providers()[$row->provider];
-            print "<tr><td>{$row->nickname}</td><td>$provider</td><td>{$row->identifier}</td><td>{$row->email}</td><td><a href='edit_account.php?account_id={$row->id}'>Edit</a></td></tr>";
+            print "<tr><td>{$row->label}</td><td>$provider</td><td>{$row->identifier}</td><td>{$row->email}</td><td>{$row->description}</td><td><a href='edit_account.php?account_id={$row->id}'>Edit</a></td></tr>";
         }
         ?>
     </table>
@@ -28,9 +29,10 @@ include "header.php";
     <h2>Add account</h2>
     <form action="add_account.php" method="POST">
         <input type="hidden" name="action" value="CREATE"/>
-        <label for="nickname">Label</label> <input type="text" name="nickname" id="nickname"/><br/>
+        <label for="label">Label</label> <input type="text" name="label" id="label"/><br/>
         <label for="provider">Provider</label> <?= Filter::dropdown("provider", AccountAdministrator::providers(), 0) ?><br/>
         <label for="identifier">Identifier</label> <input type="text" name="identifier" id="identifier"/><br/>
+        <label for="description">Description</label> <input type="text" name="description" id="description"/><br/>
         <label for="email">Notification email</label> <input type="text" name="email" id="email"/><br/>
         <input type="Submit" value="Add"/>
     </form>

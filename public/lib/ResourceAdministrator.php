@@ -65,7 +65,7 @@ class ResourceAdministrator
 
     public static function all($expiry_days, $service_id, $resource_type) {
         $results = [];
-        $sql = "SELECT s.id AS service_id, s.name AS service_name, a.nickname AS account_nickname, r.resource_type, r.uri AS resource_uri, r.expires
+        $sql = "SELECT s.id AS service_id, s.name AS service_name, a.label AS account_label, r.resource_type, r.uri AS resource_uri, r.expires
                   FROM resources r LEFT JOIN services s ON r.service_id = s.id LEFT JOIN accounts a ON s.account_id = a.id WHERE (r.expires > UNIX_TIMESTAMP() OR r.expires IS NULL)";
         $where = new WhereConstructor(false);
         $where->addParam("(r.expires IS NULL OR r.expires < (UNIX_TIMESTAMP() + :days))", ":days", $expiry_days * 3600 * 24);

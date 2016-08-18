@@ -9,7 +9,7 @@ class AccountAdministrator
     public static function accounts()
     {
         $results = [];
-        $sql = "SELECT id, nickname, provider, identifier, email FROM accounts ORDER BY nickname";
+        $sql = "SELECT id, label, provider, identifier, description, email FROM accounts ORDER BY label";
         foreach (DB::connection()->query($sql, PDO::FETCH_OBJ) as $row) {
             $results[] = $row;
         }
@@ -23,22 +23,24 @@ class AccountAdministrator
         return null;
     }
 
-    public static function create($nickname, $provider, $identifier, $email)
+    public static function create($label, $provider, $identifier, $email, $description)
     {
-        $insert = DB::connection()->prepare("INSERT INTO accounts (nickname, provider, identifier, email) VALUES (:nickname, :provider, :identifier, :email)");
-        $insert->bindParam(':nickname', $nickname);
+        $insert = DB::connection()->prepare("INSERT INTO accounts (label, provider, identifier, email, description) VALUES (:label, :provider, :identifier, :email, :description)");
+        $insert->bindParam(':label', $label);
         $insert->bindParam(':provider', $provider);
         $insert->bindParam(':identifier', $identifier);
+        $insert->bindParam(':description', $description);
         $insert->bindParam(':email', $email);
         $insert->execute();
     }
 
-    public static function update($id, $nickname, $provider, $identifier, $email)
+    public static function update($id, $label, $provider, $identifier, $email, $description)
     {
-        $insert = DB::connection()->prepare("UPDATE accounts SET nickname = :nickname, provider = :provider, identifier = :identifier, email = :email WHERE id = :id");
-        $insert->bindParam(':nickname', $nickname);
+        $insert = DB::connection()->prepare("UPDATE accounts SET label = :label, provider = :provider, identifier = :identifier, email = :email, description = :description WHERE id = :id");
+        $insert->bindParam(':label', $label);
         $insert->bindParam(':provider', $provider);
         $insert->bindParam(':identifier', $identifier);
+        $insert->bindParam(':description', $description);
         $insert->bindParam(':email', $email);
         $insert->bindParam(':id', $id);
         $insert->execute();

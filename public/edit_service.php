@@ -6,7 +6,7 @@ $auth = new Authenticator();
 $auth->assertRole(Authenticator::administrator);
 
 $accounts = [];
-@array_walk(AccountAdministrator::accounts(), function($value, $key) use (&$accounts) { $accounts[$value->id] = $value->nickname; });
+@array_walk(AccountAdministrator::accounts(), function($value, $key) use (&$accounts) { $accounts[$value->id] = $value->label; });
 
 $service_id = $_REQUEST["service_id"];
 if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "Update") {
