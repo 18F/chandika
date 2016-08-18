@@ -2,13 +2,12 @@
 #  -*- coding: utf-8 -*-
 import argparse
 import csv
-import pprint
 import re
-
-pp = pprint.PrettyPrinter(indent=4)
+import json
+import http.client
 
 parser = argparse.ArgumentParser(description='Aggregate AWS billing data by account and tag.')
-parser.add_argument('name', help="Provider name")
+parser.add_argument('--chandika', dest='chandika', help="Chandika hostname")
 parser.add_argument('billing_csv', help="Billing CSV file")
 parser.add_argument('tag_name', nargs='*', help="Names of tags to aggregate by")
 args = parser.parse_args()
@@ -40,6 +39,10 @@ with open(args.billing_csv) as csvfile:
             if no_tags:
                 costs[row['LinkedAccountId']][''][''] = costs[row['LinkedAccountId']][''][''] + float(row['UnBlendedCost'])
 
-output = { 'provider' : args.name, 'month' : month, 'costs' : costs, 'totals' : totals, 'statement' : statement }
+output = { 'provider' : 'Amazon AWS', 'month' : month, 'costs' : costs, 'totals' : totals, 'statement' : statement }
 
-pp.pprint(output)
+if args.chandika:
+    conn = http.client.HTTPSConnection(args.chandika, timeout=2)
+    conn.request("POST", "/api/billing.php", body=json.dumps(output))
+else:
+    print(json.dumps(output))
