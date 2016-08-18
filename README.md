@@ -2,6 +2,8 @@
 
 Chandika provides information on the resources being used by our services, allows new resources to be created and maintained, and is intended to be used with [Raktabija](https://github.com/18F/raktabija) to destroy unused resources.
 
+For more on the motivation behind Chandika, read the blog post [Patterns for managing multi-tenant cloud environments](https://18f.gsa.gov/2016/08/10/patterns-for-managing-multi-tenant-cloud-environments/)
+
 ## Developing and testing locally
 
 Chandika uses [Scotch Box](https://box.scotch.io/) as a testing environment. Check out the code, run `vagrant up`, and hit `192.168.33.20`.
