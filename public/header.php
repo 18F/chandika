@@ -1,7 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Chandika</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,600,800"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
@@ -12,11 +14,12 @@
 <body>
 <script src="/js/jquery-2.2.0.min.js"></script>
 <script src="/js/jquery-ui-1.11.4.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+    <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
+        <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
@@ -24,8 +27,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand page-scroll"
-               href="index.php">Chandika</a> <?if (isset($_SESSION["user_email"])) {?><p style="font-size:50%" class="navbar-brand">You are logged in as <?= $_SESSION["user_email"]?> | <a href="/login.php?logout=true">Logout</a></p><?}?>
+            <a class="navbar-brand"
+               href="index.php">Chandika</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,12 +44,27 @@
                     <a class="page-scroll" href="show_services.php">Systems</a>
                 </li>
                 <? if ($auth->belongsTo(Authenticator::administrator)) {?>
-                <li>
-                    <a class="page-scroll" href="show_accounts.php">Accounts</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="show_administrators.php">Admins</a>
-                </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Manage
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="page-scroll" href="show_accounts.php">Accounts</a>
+                            </li>
+                            <li>
+                                <a class="page-scroll" href="show_administrators.php">Admins</a>
+                            </li>
+                        </ul>
+                    </li>
+                <?}?>
+                <? if (isset($_SESSION["user_email"])) { ?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><?= $_SESSION["user_email"]?>
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/admin/login.php?logout=true">Sign out</a></li>
+                        </ul>
+                    </li>
                 <?}?>
             </ul>
         </div>

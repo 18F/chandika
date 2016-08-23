@@ -11,7 +11,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "Migrate DB") {
 
 include "header.php";
 ?>
-<section id="main">
+<div class="container-fluid">
     <h1>Administrators</h1>
     <table class="table-striped">
         <tr>
@@ -38,6 +38,6 @@ include "header.php";
     <p>Run this after upgrading Chandika</p>
     <form action="show_administrators.php"><input type="submit" name="action" value="Migrate DB"/></form>
 
-</section>
+</div>
 </body>
 </html>

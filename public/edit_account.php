@@ -14,7 +14,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "Update") {
 $account = AccountAdministrator::account($account_id);
 
 ?>
-<section id="main">
+<div class="container-fluid">
     <h1>Edit account</h1>
     <form action="edit_account.php" method="POST">
         <input type="hidden" name="account_id" value="<?= $account_id ?>" />
@@ -25,6 +25,6 @@ $account = AccountAdministrator::account($account_id);
         <label for="email">Notification email</label> <input type="text" name="email" id="email" value="<?= $account->email?>"/><br/>
         <input type="submit" name="action" value="Update"/>
     </form>
-</section>
+</div>
 </body>
 </html>

@@ -16,7 +16,7 @@ $service = ServiceAdministrator::service($service_id);
 
 include "header.php";
 ?>
-<section id="main">
+<div class="container-fluid">
     <h1>Edit system</h1>
     <form action="edit_service.php" method="POST">
         <input type="hidden" name="service_id" value="<?= $service_id?>"/>
@@ -29,6 +29,6 @@ include "header.php";
         <label for="billing_code">Billing code (TOCK)</label> <input type="text" name="billing_code" id="billing_code" value="<?= $service->billing_code?>"/><br>
         <input type="submit" name="action" value="Update"/>
     </form>
-</section>
+</div>
 </body>
 </html>

@@ -8,7 +8,7 @@ $service_id = $_REQUEST["service_id"];
 $resources = new ResourceAdministrator($service_id);
 include "header.php";
 ?>
-<section id="main">
+<div class="container-fluid">
     <h1>Resources for service <?= $resources->name()?></h1>
     <table class="table-striped">
         <tr>
@@ -40,6 +40,6 @@ include "header.php";
     <label for="uri">URI</label> <input type="text" name="uri" id="uri"/><br/>
     <input type="Submit" value="Add"/>
     </form>
-</section>
+</div>
 </body>
 </html>

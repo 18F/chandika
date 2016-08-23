@@ -18,7 +18,7 @@ foreach (ResourceAdministrator::types() as $resource) {
     $resource_types[$resource] = $resource;
 }
 ?>
-<section id="main">
+<div class="container-fluid">
     <h1>Resources</h1>
     <form action="index.php" method="get">
         Filter by:
@@ -42,6 +42,6 @@ foreach (ResourceAdministrator::types() as $resource) {
         }
         ?>
     </table>
-</section>
+</div>
 </body>
 </html>

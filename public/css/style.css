@@ -2,10 +2,7 @@
     font-family: 'Open Sans';
 }
 
-@media screen and (min-width: 1160px) {
-    .main {
-        width: 1160px;
-    }
+@media screen and (min-width: 940px) {
 
     input[type="text"] {
         width: 400px;
@@ -34,6 +31,10 @@
 
 html, body {
     height: 100%;
+}
+
+body {
+    padding-top: 50px;
 }
 
 header {

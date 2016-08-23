@@ -7,7 +7,7 @@ $auth->assertRole(Authenticator::administrator);
 
 include "header.php";
 ?>
-<section id="main">
+<div class="container-fluid">
     <h1>Accounts</h1>
     <table class="table-striped">
         <tr>
@@ -36,6 +36,6 @@ include "header.php";
         <label for="email">Notification email</label> <input type="text" name="email" id="email"/><br/>
         <input type="Submit" value="Add"/>
     </form>
-</section>
+</div>
 </body>
 </html>

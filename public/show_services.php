@@ -9,7 +9,7 @@ $accounts = [];
 
 include "header.php";
 ?>
-<section id="main">
+<div class="container-fluid">
     <h1>Systems</h1>
     <table class="table-striped">
         <tr>
@@ -43,6 +43,6 @@ include "header.php";
         <label for="billing_code">Billing code (TOCK)</label> <input type="text" name="billing_code" id="billing_code"/><br/>
         <input type="submit" name="action" value="Add"/>
     </form>
-</section>
+</div>
 </body>
 </html>
