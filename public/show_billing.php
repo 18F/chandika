@@ -16,7 +16,10 @@ include "header.php";
 ?>
 <div class="container-fluid">
     <h1>Billing</h1>
-    Available months: <?= Filter::dropdown("month", $months, $selected_month) ?>
+    <form action="show_billing.php" method="get">
+        Available months: <?= Filter::dropdown("month", $months, $selected_month) ?>
+        <button type="submit" name="action" value="filter">Go</button>
+    </form>
     <h2>Total spend for month <?= $selected_month ?></h2>
     <table class="table-striped">
         <tr>
@@ -27,7 +30,7 @@ include "header.php";
         </tr>
         <?
         foreach ($billing_data as $account) {
-            print "<tr><td>{$account->identifier}</td><td>{$account->label}</td><td>{$account->amount}</td><td>{$account->description}</td></tr>";
+            print "<tr><td><a href='show_billing_month.php?account_id={$account->identifier}&month={$selected_month}'>{$account->identifier}</a></td><td>{$account->label}</td><td>{$account->amount}</td><td>{$account->description}</td></tr>";
         }
         ?>
     </table>
