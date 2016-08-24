@@ -28,7 +28,7 @@ class DB
                           PRIMARY KEY(id))");
         $sql = "SELECT migration FROM migrations ORDER BY id DESC";
         $migrated = [];
-        foreach (DB::connection()->query($sql, PDO::FETCH_OBJ) as $row) {
+        foreach (self::$conn->query($sql, PDO::FETCH_OBJ) as $row) {
             $migrated[] = $row->migration;
         }
         $migrations = scandir("lib/migrations");
@@ -41,6 +41,22 @@ class DB
                 self::$conn->exec("INSERT INTO migrations (migration) VALUES ('$migration')");
             }
         }
+    }
+
+    public static function query($query, $params = []) {
+        $results = [];
+        $stmt = self::$conn->prepare($query);
+        $stmt->execute($params);
+        while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+            $results[] = $row;
+        }
+        return $results;
+        var_dump($results);
+    }
+
+    public static function execute($query, $params = []) {
+        $stmt = self::$conn->prepare($query);
+        $stmt->execute($params);
     }
 }
 ?>

@@ -1,4 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +17,6 @@
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
@@ -53,6 +51,9 @@
                             </li>
                             <li>
                                 <a class="page-scroll" href="show_administrators.php">Admins</a>
+                            </li>
+                            <li>
+                                <a class="page-scroll" href="show_api_keys.php">API keys</a>
                             </li>
                         </ul>
                     </li>

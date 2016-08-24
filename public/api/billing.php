@@ -2,6 +2,8 @@
 spl_autoload_register(function ($class) {
     include '../lib/' . $class . '.php';
 });
+ApiKeyAdministrator::authenticate();
+
 $raw_billing_data = json_decode(file_get_contents("php://input"), true);
 $month = $raw_billing_data["month"] . "-01";
 $provider = $raw_billing_data["provider"];

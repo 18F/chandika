@@ -2,6 +2,10 @@
 spl_autoload_register(function ($class) {
     include '../lib/' . $class . '.php';
 });
+ApiKeyAdministrator::authenticate();
+if (!key_exists("account_id", $_REQUEST)) {
+    die();
+}
 $account_id = $_REQUEST["account_id"];
 
 $statement = DB::connection()->prepare("SELECT label, is_prod, provider FROM accounts WHERE identifier = :account");

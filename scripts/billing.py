@@ -8,6 +8,7 @@ import http.client
 
 parser = argparse.ArgumentParser(description='Aggregate AWS billing data by account and tag.')
 parser.add_argument('--chandika', dest='chandika', help="Chandika hostname")
+parser.add_argument('--api-key', dest='api_key', help="Chandika API key")
 parser.add_argument('billing_csv', help="Billing CSV file")
 parser.add_argument('tag_name', nargs='*', help="Names of tags to aggregate by")
 args = parser.parse_args()
@@ -42,7 +43,7 @@ with open(args.billing_csv) as csvfile:
 output = { 'provider' : 'Amazon AWS', 'month' : month, 'costs' : costs, 'totals' : totals, 'statement' : statement }
 
 if args.chandika:
-    conn = http.client.HTTPSConnection(args.chandika, timeout=2)
-    conn.request("POST", "/api/billing.php", body=json.dumps(output))
+    conn = http.client.HTTPConnection(args.chandika, timeout=2)
+    conn.request("POST", "/api/billing.php?api_key=" + args.api_key, body=json.dumps(output))
 else:
     print(json.dumps(output))
