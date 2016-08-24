@@ -41,6 +41,9 @@
                 <li>
                     <a class="page-scroll" href="show_services.php">Systems</a>
                 </li>
+                <li>
+                    <a class="page-scroll" href="show_billing.php">Billing</a>
+                </li>
                 <? if ($auth->belongsTo(Authenticator::administrator)) {?>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Manage

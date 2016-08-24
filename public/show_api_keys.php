@@ -38,6 +38,7 @@ include "header.php";
         ?>
     </table>
     <hr />
+    <h2>Add API key</h2>
     <form action="show_api_keys.php" method="POST">
         <input type="hidden" name="action" value="CREATE"/>
         <label for="label">Label</label> <input type="text" name="label" id="label"/>
