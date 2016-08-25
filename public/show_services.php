@@ -45,7 +45,7 @@ include "header.php";
         <label for="tag">Infrastructure Tag</label> <input type="text" name="tag" id="tag"/><br/>
         <label for="billing_code">Billing code (TOCK)</label> <input type="text" name="billing_code" id="billing_code"/><br/>
         <label for="description">Description</label> <input type="text" name="description" id="description"/><br>
-        <input type="checkbox" name="archived"/> Archived<br/>
+        <input type="checkbox" name="is_archived"/> Archived<br/>
         <input type="submit" name="action" value="Add"/>
     </form>
 </div>

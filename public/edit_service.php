@@ -5,17 +5,16 @@ spl_autoload_register(function ($class) {
 $auth = new Authenticator();
 $auth->assertRole(Authenticator::administrator);
 
-$accounts = [];
-@array_walk(AccountAdministrator::accounts(), function($value, $key) use (&$accounts) { $accounts[$value->id] = $value->label; });
-
 $service_id = $_REQUEST["service_id"];
 if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "Update") {
-    $properties = $_REQUEST;
-    $properties["is_archived"] = isset($_REQUEST["archived"]) ? 1 : 0;
-    ServiceAdministrator::update($service_id, $properties);
+    ServiceAdministrator::update($service_id, $_REQUEST);
     header("Location: /show_services.php");
     die();
 }
+
+$accounts = [];
+@array_walk(AccountAdministrator::accounts(), function($value, $key) use (&$accounts) { $accounts[$value->id] = $value->label; });
+
 $service = ServiceAdministrator::service($service_id);
 $checked = $service->is_archived == 1 ? " checked" : "";
 

@@ -5,8 +5,6 @@ spl_autoload_register(function ($class) {
 $auth = new Authenticator();
 
 $services = new ServiceAdministrator();
-$properties = $_REQUEST;
-$properties["is_archived"] = isset($_REQUEST["archived"]) ? 1 : 0;
-$services->create($properties);
+$services->create($_REQUEST);
 header("Location: /show_services.php");
 ?>
