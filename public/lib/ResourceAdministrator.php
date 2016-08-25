@@ -2,19 +2,15 @@
 class ResourceAdministrator
 {
     private $service_id;
-    private $service_name;
-    private $account_identifier;
+    private $service_info;
 
-    private static $types_with_expiry = [ "AWS resource" => [ "prod" => 365, "non-prod" => 30 ], "IAA" => [], "HTTPS certificate" => [], "Domain name" => [] ];
+    private static $types_with_expiry = [ "AWS resource" => [ "prod" => 365, "non-prod" => 30 ], "IAA" => [], "HTTPS certificate" => [], "Domain name" => [], "ATO" => [] ];
 
     public function __construct($service_id)
     {
         $this->service_id = $service_id;
-        $query = DB::connection()->prepare("SELECT s.name, a.identifier FROM services s LEFT JOIN accounts a ON s.account_id = a.id WHERE s.id = ?");
-        $query->execute(array($service_id));
-        $row = $query->fetch(PDO::FETCH_OBJ);
-        $this->service_name = $row->name;
-        $this->account_identifier = $row->identifier;
+        $services = DB::query("SELECT s.name, a.identifier, a.is_prod FROM services s LEFT JOIN accounts a ON s.account_id = a.id WHERE s.id = ?", [$service_id]);
+        $this->service_info = $services[0];
     }
 
     public function resources()
@@ -27,15 +23,11 @@ class ResourceAdministrator
         return $results;
     }
 
-    public function name() {
-        return $this->service_name;
-    }
-
-    private function get_expiry_date($resource_type, $is_prod) {
+    private function get_expiry_date($resource_type, $expires) {
         if (!array_key_exists($resource_type, self::$types_with_expiry)) throw new Exception("Couldn't find type ".$resource_type);
         $expiry_data = self::$types_with_expiry[$resource_type];
-        if (empty($expiry_data)) return null;
-        $days_to_add = $is_prod ? $expiry_data["prod"] : $expiry_data["non-prod"];
+        if (empty($expiry_data)) return $expires;
+        $days_to_add = $this->service_info->is_prod ? $expiry_data["prod"] : $expiry_data["non-prod"];
         return time() + (24 * 60 * 60 * $days_to_add);
     }
 
@@ -46,7 +38,7 @@ class ResourceAdministrator
         $insert->bindParam(':resource_type', $resource_type);
         $insert->bindParam(':owner', $owner);
         $insert->bindParam(':uri', $uri);
-        $expiry_date = $this->get_expiry_date($resource_type, false);
+        $expiry_date = $this->get_expiry_date($resource_type, $expires);
         $insert->bindParam(':expires', $expiry_date);
         $insert->execute();
     }
@@ -79,9 +71,13 @@ class ResourceAdministrator
         return $results;
     }
 
+    public function name() {
+        return $this->service_info->name;
+    }
+
     public function account_identifier()
     {
-        return $this->account_identifier;
+        return $this->service_info->identifier;
     }
 
 }

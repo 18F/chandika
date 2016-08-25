@@ -11,7 +11,7 @@ if ($_REQUEST["action"] == "CREATE") {
   $uri = $_REQUEST["uri"];
   $resource_type = $_REQUEST["resource_type"];
   $creator = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Nobody";
-  $resources->create($resource_type, $creator, $uri, time());
+  $resources->create($resource_type, $creator, $uri, strtotime($_REQUEST["expiry_date"]));
 }
 if ($_REQUEST["action"] == "DELETE") {
   ResourceAdministrator::delete($_REQUEST["id"]);

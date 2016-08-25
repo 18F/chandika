@@ -16,12 +16,14 @@ include "header.php";
             <th>Identifier</th>
             <th>Notification email</th>
             <th>Description</th>
+            <th>Production</th>
             <th>Actions</th>
         </tr>
         <?
         foreach (AccountAdministrator::accounts() as $row) {
             $provider = AccountAdministrator::providers()[$row->provider];
-            print "<tr><td>{$row->label}</td><td>$provider</td><td>{$row->identifier}</td><td>{$row->email}</td><td>{$row->description}</td><td><a href='edit_account.php?account_id={$row->id}'>Edit</a></td></tr>";
+            $prod = $row->is_prod ? "Yes" : "No";
+            print "<tr><td>{$row->label}</td><td>$provider</td><td>{$row->identifier}</td><td>{$row->email}</td><td>{$row->description}</td><td>$prod</td><td><a href='edit_account.php?account_id={$row->id}'>Edit</a></td></tr>";
         }
         ?>
     </table>
@@ -34,6 +36,7 @@ include "header.php";
         <label for="identifier">Identifier</label> <input type="text" name="identifier" id="identifier"/><br/>
         <label for="description">Description</label> <input type="text" name="description" id="description"/><br/>
         <label for="email">Notification email</label> <input type="text" name="email" id="email"/><br/>
+        <input type="checkbox" name="is_prod" /> Production account<br/>
         <input type="Submit" value="Add"/>
     </form>
 </div>

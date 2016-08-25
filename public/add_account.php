@@ -5,6 +5,6 @@ spl_autoload_register(function ($class) {
 $auth = new Authenticator();
 $auth->assertRole(Authenticator::administrator);
 
-AccountAdministrator::create($_REQUEST["label"], $_REQUEST["provider"], $_REQUEST["identifier"], $_REQUEST["email"],$_REQUEST["description"]);
+AccountAdministrator::create($_REQUEST["label"], $_REQUEST["provider"], $_REQUEST["identifier"], $_REQUEST["email"],$_REQUEST["description"], isset($_REQUEST["is_prod"]) ? 1 : 0);
 header("Location: /show_accounts.php");
 ?>

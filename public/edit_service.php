@@ -11,6 +11,8 @@ $accounts = [];
 $service_id = $_REQUEST["service_id"];
 if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "Update") {
     ServiceAdministrator::update($service_id, $_REQUEST["name"], $_REQUEST["owner"], $_REQUEST["account_id"], $_REQUEST["repository"], $_REQUEST["url"], $_REQUEST["billing_code"], $_REQUEST["tag"]);
+    header("Location: /show_services.php");
+    die();
 }
 $service = ServiceAdministrator::service($service_id);
 
