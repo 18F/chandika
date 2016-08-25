@@ -20,12 +20,15 @@ include "header.php";
             <th>Owner</th>
             <th>Billing code</th>
             <th>Infrastructure Tag</th>
+            <th>Archived?</th>
+            <th>Description</th>
             <th>Actions</th>
         </tr>
         <?
         foreach (ServiceAdministrator::services() as $row) {
+            $is_archived = $row->is_archived == 1 ? "Yes" : "No";
             print "<tr><td>{$row->name}</td><td>{$row->label}</td><td>{$row->repository}</td><td>{$row->url}</td><td>{$row->owner}</td>
-                   <td>{$row->billing_code}</td><td>{$row->tag}</td><td><a href='edit_service.php?service_id={$row->id}'>Edit</a> |
+                   <td>{$row->billing_code}</td><td>{$row->tag}</td><td>$is_archived</td><td>$row->description</td><td><a href='edit_service.php?service_id={$row->id}'>Edit</a> |
                    <a href='show_resources.php?service_id={$row->id}'>Resources</a></td></tr>";
         }
         ?>
@@ -41,6 +44,8 @@ include "header.php";
         <label for="url">Service URL</label> <input type="text" name="url" id="url"/><br>
         <label for="tag">Infrastructure Tag</label> <input type="text" name="tag" id="tag"/><br/>
         <label for="billing_code">Billing code (TOCK)</label> <input type="text" name="billing_code" id="billing_code"/><br/>
+        <label for="description">Description</label> <input type="text" name="description" id="description"/><br>
+        <input type="checkbox" name="archived"/> Archived<br/>
         <input type="submit" name="action" value="Add"/>
     </form>
 </div>

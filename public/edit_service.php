@@ -10,11 +10,14 @@ $accounts = [];
 
 $service_id = $_REQUEST["service_id"];
 if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "Update") {
-    ServiceAdministrator::update($service_id, $_REQUEST["name"], $_REQUEST["owner"], $_REQUEST["account_id"], $_REQUEST["repository"], $_REQUEST["url"], $_REQUEST["billing_code"], $_REQUEST["tag"]);
+    $properties = $_REQUEST;
+    $properties["is_archived"] = isset($_REQUEST["archived"]) ? 1 : 0;
+    ServiceAdministrator::update($service_id, $properties);
     header("Location: /show_services.php");
     die();
 }
 $service = ServiceAdministrator::service($service_id);
+$checked = $service->is_archived == 1 ? " checked" : "";
 
 include "header.php";
 ?>
@@ -29,6 +32,8 @@ include "header.php";
         <label for="url">Service URL</label> <input type="text" name="url" id="url" value="<?= $service->url?>"/><br>
         <label for="tag">Infrastructure tag</label> <input type="text" name="tag" id="tag" value="<?= $service->tag?>"/><br>
         <label for="billing_code">Billing code (TOCK)</label> <input type="text" name="billing_code" id="billing_code" value="<?= $service->billing_code?>"/><br>
+        <label for="description">Description</label> <input type="text" name="description" id="description" value="<?= $service->description?>"/><br>
+        <input type="checkbox" name="is_archived" <?=$checked?>/> Archived<br/>
         <input type="submit" name="action" value="Update"/>
     </form>
 </div>

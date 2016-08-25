@@ -4,13 +4,8 @@ class ServiceAdministrator
 {
     public static function services()
     {
-        $results = [];
-        $sql = "SELECT s.id, s.name, s.account_id, a.label, s.repository, s.url, s.owner, s.billing_code, s.tag
-                  FROM services s LEFT JOIN accounts a ON s.account_id = a.id ORDER BY s.name";
-        foreach (DB::connection()->query($sql, PDO::FETCH_OBJ) as $row) {
-            $results[] = $row;
-        }
-        return $results;
+        return DB::query("SELECT s.id, s.name, s.account_id, s.is_archived, s.description, a.label, s.repository, s.url, s.owner, s.billing_code, s.tag
+                  FROM services s LEFT JOIN accounts a ON s.account_id = a.id ORDER BY s.name");
     }
 
     public static function service($id) {
@@ -20,32 +15,25 @@ class ServiceAdministrator
         return null;
     }
 
-    public static function create($name, $account_id, $repository, $url, $owner, $billing_code, $tag)
+    public static function create($properties)
     {
-        $insert = DB::connection()->prepare("INSERT INTO services (name, account_id, repository, owner, url, billing_code, tag)
-                                             VALUES (:name, :account_id, :repository, :owner, :url, :billing_code, :tag)");
-        $insert->bindParam(':name', $name);
-        $insert->bindParam(':owner', $owner);
-        $insert->bindParam(':account_id', $account_id);
-        $insert->bindParam(':repository', $repository);
-        $insert->bindParam(':url', $url);
-        $insert->bindParam(':billing_code', $billing_code);
-        $insert->bindParam(':tag', $tag);
+        $insert = DB::connection()->prepare("INSERT INTO services (name, account_id, repository, owner, url, billing_code, tag, description, is_archived)
+                                             VALUES (:name, :account_id, :repository, :owner, :url, :billing_code, :tag, :description, :is_archived)");
+        self::helper()->bind($insert, $properties);
         $insert->execute();
     }
 
-    public static function update($id, $name, $owner, $account_id, $repository, $url, $billing_code, $tag)
+    public static function update($id, $properties)
     {
-        $insert = DB::connection()->prepare("UPDATE services SET name = :name, account_id = :account_id, repository = :repository, owner = :owner, url = :url, billing_code = :billing_code, tag = :tag WHERE id = :id");
-        $insert->bindParam(':name', $name);
-        $insert->bindParam(':owner', $owner);
-        $insert->bindParam(':account_id', $account_id);
-        $insert->bindParam(':repository', $repository);
-        $insert->bindParam(':billing_code', $billing_code);
-        $insert->bindParam(':url', $url);
+        $insert = DB::connection()->prepare("UPDATE services SET name = :name, account_id = :account_id, repository = :repository, owner = :owner, url = :url, billing_code = :billing_code, tag = :tag, is_archived = :is_archived, description = :description WHERE id = :id");
+        self::helper()->bind($insert, $properties);
         $insert->bindParam(':id', $id);
-        $insert->bindParam(':tag', $tag);
         $insert->execute();
+    }
+
+    private static function helper() {
+        $fields = [["name" => "name"], ["name" => "owner"], ["name" => "account_id"], ["name" => "repository"], ["name" => "url"], ["name" => "billing_code"], ["name" => "tag"], ["name" => "is_archived"], ["name" => "description"]];
+        return  new CrudHelper($fields);
     }
 }
 
