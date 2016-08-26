@@ -47,8 +47,10 @@ include "header.php";
         foreach ($sa->services_filtered($account_selected, $show_archived) as $row) {
             $is_archived = $row->is_archived == 1 ? "Yes" : "No";
             print "<tr><td>{$row->name}</td><td>{$row->label}</td><td>{$row->repository}</td><td>{$row->url}</td><td>{$row->owner}</td>
-                   <td>{$row->billing_code}</td><td>{$row->tag}</td><td>$is_archived</td><td>$row->description</td><td><a href='edit_service.php?service_id={$row->id}'>Edit</a> |
-                   <a href='show_resources.php?service_id={$row->id}'>Resources</a></td></tr>";
+                   <td>{$row->billing_code}</td><td>{$row->tag}</td><td>$is_archived</td><td>$row->description</td>
+                   <td><a href='edit_service.php?service_id={$row->id}'>Edit</a> |
+                   <a href='show_resources.php?service_id={$row->id}'>Resources</a> |
+                   <a href='show_billing_service.php?service_id={$row->id}'>Billing</a></td></tr>";
         }
         ?>
     </table>

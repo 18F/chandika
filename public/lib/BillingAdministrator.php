@@ -28,4 +28,10 @@ class BillingAdministrator
         $query = "SELECT DISTINCT tagname FROM billing WHERE invoice_date = :invoice_date AND identifier = :identifier AND tagname IS NOT NULL ORDER BY tagname";
         return DB::query($query, [":identifier" => $account_id, ":invoice_date" => $month."-01"]);
     }
+
+    public static function byService($tag_value)
+    {
+        $query = "SELECT SUM(amount) as total, invoice_date FROM billing WHERE tagvalue = :tagvalue GROUP BY invoice_date ORDER BY invoice_date DESC";
+        return DB::query($query, [":tagvalue" => $tag_value]);
+    }
 }
