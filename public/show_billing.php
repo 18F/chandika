@@ -3,6 +3,7 @@ spl_autoload_register(function ($class) {
     include 'lib/' . $class . '.php';
 });
 $auth = new Authenticator();
+setlocale(LC_MONETARY, 'en_US');
 
 $months = [];
 @array_walk(BillingAdministrator::months(), function ($value, $key) use (&$months) {
@@ -30,7 +31,7 @@ include "header.php";
         </tr>
         <?
         foreach ($billing_data as $account) {
-            print "<tr><td><a href='show_billing_month.php?account_id={$account->identifier}&month={$selected_month}'>{$account->identifier}</a></td><td>{$account->label}</td><td>{$account->amount}</td><td>{$account->description}</td></tr>";
+            print "<tr><td><a href='show_billing_month.php?account_id={$account->identifier}&month={$selected_month}'>{$account->identifier}</a></td><td>{$account->label}</td><td>".money_format('%(#10n', $account->amount)."</td><td>{$account->description}</td></tr>";
         }
         ?>
     </table>

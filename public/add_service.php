@@ -4,7 +4,7 @@ spl_autoload_register(function ($class) {
 });
 $auth = new Authenticator();
 
-$services = new ServiceAdministrator();
+$services = new ServiceAdministrator($auth);
 $services->create($_REQUEST);
 header("Location: /show_services.php");
 ?>

@@ -16,9 +16,9 @@ class Authenticator
         @array_walk($user_administrators->users(), function ($value, $key) {
             $this->administrators[] = $value->email;
         });
+        session_start();
         $oauth = getenv("CHANDIKA_OAUTH");
         if ($oauth != "OFF") {
-            session_start();
             if (!isset($_SESSION["user_email"])) {
                 if (isset($_REQUEST["code"])) {
                     $this->http_client = new Client(["base_uri" => "https://github.com"]);

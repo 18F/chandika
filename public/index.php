@@ -8,9 +8,9 @@ include "header.php";
 $expiry_selected = isset($_REQUEST["expiry"]) ? $_REQUEST["expiry"] : "7";
 $service_selected = isset($_REQUEST["service"]) ? $_REQUEST["service"] : "";
 $resource_type_selected = isset($_REQUEST["resource_type"]) ? $_REQUEST["resource_type"] : "";
-$service_admin = new ServiceAdministrator();
+$service_admin = new ServiceAdministrator($auth);
 $services = ["" => "all"];
-foreach ($service_admin->services() as $service) {
+foreach ($service_admin->services($auth) as $service) {
     $services[$service->id] = $service->name;
 }
 $resource_types = ["" => "all"];
