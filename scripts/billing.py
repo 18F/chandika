@@ -43,7 +43,7 @@ with open(args.billing_csv) as csvfile:
 output = { 'provider' : 'Amazon AWS', 'month' : month, 'costs' : costs, 'totals' : totals, 'statement' : statement }
 
 if args.chandika:
-    conn = http.client.HTTPConnection(args.chandika, timeout=2)
+    conn = http.client.HTTPSConnection(args.chandika, timeout=2)
     conn.request("POST", "/api/billing.php?api_key=" + args.api_key, body=json.dumps(output))
 else:
     print(json.dumps(output))
