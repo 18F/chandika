@@ -76,8 +76,23 @@ class ServiceAdministrator
 
     private static function helper()
     {
-        $fields = [["name" => "name"], ["name" => "owner"], ["name" => "account_id"], ["name" => "repository"], ["name" => "url"], ["name" => "billing_code"], ["name" => "tag"], ["name" => "is_archived", "type" => CrudHelper::checkbox], ["name" => "description"]];
+        $fields = [
+            [CrudHelper::name => "name", CrudHelper::desc => "System name"],
+            [CrudHelper::name => "owner", CrudHelper::desc => "Owner's email id"],
+            [CrudHelper::name => "account_id", CrudHelper::desc => "Account", CrudHelper::type => CrudHelper::dropdown],
+            [CrudHelper::name => "repository", CrudHelper::desc => "GitHub repo"],
+            [CrudHelper::name => "url", CrudHelper::desc => "Service URL"],
+            [CrudHelper::name => "billing_code", CrudHelper::desc => "Billing code (TOCK)"],
+            [CrudHelper::name => "tag", CrudHelper::desc => "Infrastructure Tag"],
+            [CrudHelper::name => "description", CrudHelper::desc => "Description"],
+            [CrudHelper::name => "is_archived", CrudHelper::desc => "Archived", CrudHelper::type => CrudHelper::checkbox]
+        ];
         return new CrudHelper($fields);
+    }
+
+    public static function form($options, $selected)
+    {
+        return self::helper()->form($options, $selected);
     }
 }
 
