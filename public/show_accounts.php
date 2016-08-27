@@ -29,15 +29,9 @@ include "header.php";
     </table>
     <hr/>
     <h2>Add account</h2>
-    <form action="add_account.php" method="POST">
-        <input type="hidden" name="action" value="CREATE"/>
-        <label for="label">Label</label> <input type="text" name="label" id="label"/><br/>
-        <label for="provider">Provider</label> <?= Filter::dropdown("provider", AccountAdministrator::providers(), 0) ?><br/>
-        <label for="identifier">Identifier</label> <input type="text" name="identifier" id="identifier"/><br/>
-        <label for="description">Description</label> <input type="text" name="description" id="description"/><br/>
-        <label for="email">Notification email</label> <input type="text" name="email" id="email"/><br/>
-        <input type="checkbox" name="is_prod" /> Production account<br/>
-        <input type="Submit" value="Add"/>
+    <form action="edit_account.php" method="POST">
+        <?= AccountAdministrator::form(["provider" => AccountAdministrator::providers()], []) ?>
+        <button type="submit" name="action" value="CREATE">Add</button>
     </form>
 </div>
 </body>
