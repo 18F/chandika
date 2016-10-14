@@ -18,12 +18,12 @@ include "header.php";
     Aggregating billing data for all tags with value <?=$service->tag?>.<br/><br/>
     <table class="table-striped">
         <tr>
-            <th>Month</th>
+            <th>Invoice date</th>
             <th>Amount</th>
         </tr>
         <?
-        foreach ($billing_data as $month) {
-            print "<tr><td>".substr($month->invoice_date, 0, 7)."</td><td>{$month->total}</td></tr>";
+        foreach ($billing_data as $invoice_date) {
+            print "<tr><td>{$invoice_date->invoice_date}</td><td>{$invoice_date->total}</td></tr>";
         }
         ?>
     </table>

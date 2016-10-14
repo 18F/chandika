@@ -51,7 +51,6 @@ class DB
             $results[] = $row;
         }
         return $results;
-        var_dump($results);
     }
 
     public static function execute($query, $params = []) {

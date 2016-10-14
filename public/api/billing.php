@@ -5,7 +5,7 @@ spl_autoload_register(function ($class) {
 ApiKeyAdministrator::authenticate();
 
 $raw_billing_data = json_decode(file_get_contents("php://input"), true);
-$month = $raw_billing_data["month"] . "-01";
+$month = $raw_billing_data["invoice_date"];
 $provider = $raw_billing_data["provider"];
 $costs = $raw_billing_data["costs"];
 $totals = $raw_billing_data["totals"];

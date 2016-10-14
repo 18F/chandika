@@ -9,6 +9,7 @@ import http.client
 parser = argparse.ArgumentParser(description='Aggregate AWS billing data by account and tag.')
 parser.add_argument('--chandika', dest='chandika', help="Chandika hostname")
 parser.add_argument('--api-key', dest='api_key', help="Chandika API key")
+parser.add_argument('--invoice-date', dest='invoice_date', help="Invoice date")
 parser.add_argument('billing_csv', help="Billing CSV file")
 parser.add_argument('tag_name', nargs='*', help="Names of tags to aggregate by")
 args = parser.parse_args()
@@ -26,7 +27,7 @@ with open(args.billing_csv) as csvfile:
             totals[row['LinkedAccountId']] = row['UnBlendedCost']
         elif row['RecordType'] == 'StatementTotal':
             statement = row['UnBlendedCost']
-            match = re.search('\d\d\d\d-\d\d', row['ItemDescription'])
+            match = re.search('\d\d\d\d-\d\d-\d\d', row['ItemDescription'])
             month = match.group()
         elif row['RecordType'] == 'LineItem':
             if row['LinkedAccountId'] not in costs:
@@ -40,7 +41,8 @@ with open(args.billing_csv) as csvfile:
             if no_tags:
                 costs[row['LinkedAccountId']][''][''] = costs[row['LinkedAccountId']][''][''] + float(row['UnBlendedCost'])
 
-output = { 'provider' : 'Amazon AWS', 'month' : month, 'costs' : costs, 'totals' : totals, 'statement' : statement }
+invoice_date = args.invoice_date if args.invoice_date else month
+output = { 'provider' : 'Amazon AWS', 'invoice_date' : invoice_date, 'costs' : costs, 'totals' : totals, 'statement' : statement }
 
 if args.chandika:
     conn = http.client.HTTPSConnection(args.chandika, timeout=2)
