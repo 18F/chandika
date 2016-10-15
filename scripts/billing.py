@@ -10,6 +10,7 @@ parser = argparse.ArgumentParser(description='Aggregate AWS billing data by acco
 parser.add_argument('--chandika', dest='chandika', help="Chandika hostname")
 parser.add_argument('--api-key', dest='api_key', help="Chandika API key")
 parser.add_argument('--invoice-date', dest='invoice_date', help="Invoice date")
+parser.add_argument('--discount-factor', dest='discount_factor', help="If your vendor adds a discount, put it here. 1 = full price.")
 parser.add_argument('billing_csv', help="Billing CSV file")
 parser.add_argument('tag_name', nargs='*', help="Names of tags to aggregate by")
 args = parser.parse_args()
@@ -42,7 +43,8 @@ with open(args.billing_csv) as csvfile:
                 costs[row['LinkedAccountId']][''][''] = costs[row['LinkedAccountId']][''][''] + float(row['UnBlendedCost'])
 
 invoice_date = args.invoice_date if args.invoice_date else month
-output = { 'provider' : 'Amazon AWS', 'invoice_date' : invoice_date, 'costs' : costs, 'totals' : totals, 'statement' : statement }
+discount_factor = args.discount_factor if args.discount_factor else 1
+output = { 'provider' : 'Amazon AWS', 'invoice_date' : invoice_date, 'discount_factor' : discount_factor, 'costs' : costs, 'totals' : totals, 'statement' : statement }
 
 if args.chandika:
     conn = http.client.HTTPSConnection(args.chandika, timeout=2)

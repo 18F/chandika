@@ -9,7 +9,7 @@ class BillingAdministrator
 
     public static function byInvoiceDate($date)
     {
-        $query = "SELECT b.identifier, b.amount, a.label, a.description FROM billing b
+        $query = "SELECT b.identifier, b.amount * b.discount_factor AS amount, a.label, a.description FROM billing b
                   LEFT JOIN accounts a ON b.identifier = a.identifier
                   WHERE b.tagname IS NULL AND b.invoice_date = :invoice_date ORDER BY b.identifier";
         return DB::query($query, [":invoice_date" => $date]);
@@ -17,7 +17,7 @@ class BillingAdministrator
 
     public static function byTag($account_id, $invoice_date, $tag_name)
     {
-        $query = "SELECT SUM(amount) as total, tagvalue FROM billing
+        $query = "SELECT SUM(amount) * discount_factor as total, tagvalue FROM billing
                   WHERE tagname = :tagname AND invoice_date = :invoice_date AND identifier = :account_id
                   GROUP BY tagvalue ORDER BY tagvalue";
         return DB::query($query, [":invoice_date" => $invoice_date, ":account_id" => $account_id, ":tagname" => $tag_name]);
@@ -31,7 +31,7 @@ class BillingAdministrator
 
     public static function byService($tag_value)
     {
-        $query = "SELECT SUM(amount) as total, invoice_date FROM billing WHERE tagvalue = :tagvalue GROUP BY invoice_date ORDER BY invoice_date DESC";
+        $query = "SELECT SUM(amount) * discount_factor as total, invoice_date FROM billing WHERE tagvalue = :tagvalue GROUP BY invoice_date ORDER BY invoice_date DESC";
         return DB::query($query, [":tagvalue" => $tag_value]);
     }
 }
