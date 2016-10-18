@@ -1,9 +1,6 @@
 <?php
-spl_autoload_register(function ($class) {
-    include 'lib/' . $class . '.php';
-});
+require "autoload.php";
 $auth = new Authenticator();
-setlocale(LC_MONETARY, 'en_US');
 
 $months = [];
 @array_walk(BillingAdministrator::months(), function ($value, $key) use (&$months) {

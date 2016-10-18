@@ -1,7 +1,5 @@
 <?
-spl_autoload_register(function ($class) {
-    include 'lib/' . $class . '.php';
-});
+require "autoload.php";
 $auth = new Authenticator();
 $auth->assertRole(Authenticator::administrator);
 

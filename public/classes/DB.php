@@ -31,7 +31,7 @@ class DB
         foreach (self::$conn->query($sql, PDO::FETCH_OBJ) as $row) {
             $migrated[] = $row->migration;
         }
-        $migrations = scandir("lib/migrations");
+        $migrations = scandir($_SERVER["DOCUMENT_ROOT"]."/classes/migrations");
         foreach ($migrations as $migration) {
             if (substr($migration, 0, 1) == "m" && !in_array($migration, $migrated)) {
                 $classname = substr($migration, 0, -4);

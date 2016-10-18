@@ -1,7 +1,5 @@
 <?php
-spl_autoload_register(function ($class) {
-    include 'lib/' . $class . '.php';
-});
+require "autoload.php";
 $auth = new Authenticator();
 
 $account_id = $_REQUEST["account_id"];
