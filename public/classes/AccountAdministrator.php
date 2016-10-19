@@ -51,5 +51,13 @@ class AccountAdministrator
         return self::helper()->form($options, $selected);
     }
 
+    public static function delete($account_id)
+    {
+        $services = DB::query("SELECT id FROM services WHERE account_id = :account_id", [":account_id" => $account_id]);
+        if (count($services) == 0) {
+            DB::execute("DELETE FROM accounts WHERE id = :id", [":id" => $account_id]);
+        }
+    }
+
 }
 ?>

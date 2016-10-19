@@ -8,6 +8,9 @@ if (key_exists("action", $_REQUEST)) {
         case "UPDATE":
             AccountAdministrator::update($_REQUEST["account_id"], $_REQUEST);
             break;
+        case "DELETE":
+            AccountAdministrator::delete($_REQUEST["account_id"]);
+            break;
         case "CREATE":
             AccountAdministrator::create($_REQUEST);
             break;
