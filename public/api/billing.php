@@ -1,7 +1,5 @@
 <?php
-spl_autoload_register(function ($class) {
-    include '../lib/' . $class . '.php';
-});
+require "../autoload.php";
 ApiKeyAdministrator::authenticate();
 
 $raw_billing_data = json_decode(file_get_contents("php://input"), true);

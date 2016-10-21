@@ -1,7 +1,5 @@
 <?
-spl_autoload_register(function ($class) {
-    include '../lib/' . $class . '.php';
-});
+require "../autoload.php";
 ApiKeyAdministrator::authenticate();
 if (!key_exists("account_id", $_REQUEST)) {
     die();
