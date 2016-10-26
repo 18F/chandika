@@ -1,5 +1,5 @@
 ---
 applications:
 - name: chandika 
-  memory: 6M
+  memory: 256M
   buildpack: php_buildpack
