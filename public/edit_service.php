@@ -1,7 +1,6 @@
 <?
 require "autoload.php";
 $auth = new Authenticator();
-$auth->assertRole(Authenticator::administrator);
 $sa = new ServiceAdministrator($auth);
 
 if (isset($_REQUEST["action"])) {
