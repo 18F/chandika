@@ -10,6 +10,5 @@ deployment:
   production:
     branch: [master]
     commands:
-      - cd public
       - cf login -a https://api.fr.cloud.gov/ -u $CF_CHANDIKA_USER -p $CF_CHANDIKA_PASS -o gsa-tts-infrastructure -s chandika-prod
-      - cf push chandika
+      - cd public && cf push chandika
