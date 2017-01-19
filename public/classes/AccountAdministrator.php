@@ -8,7 +8,7 @@ class AccountAdministrator
 
     public static function accounts()
     {
-        return DB::query("SELECT id, label, provider, identifier, description, email, is_prod FROM accounts ORDER BY label");
+        return DB::query("SELECT id, label, provider, identifier, description, email, is_prod, is_archived FROM accounts ORDER BY label");
     }
 
     public static function account($id) {
@@ -20,14 +20,14 @@ class AccountAdministrator
 
     public static function create($properties)
     {
-        $insert = DB::connection()->prepare("INSERT INTO accounts (label, provider, identifier, email, description, is_prod) VALUES (:label, :provider, :identifier, :email, :description, :is_prod)");
+        $insert = DB::connection()->prepare("INSERT INTO accounts (label, provider, identifier, email, description, is_prod, is_archived) VALUES (:label, :provider, :identifier, :email, :description, :is_prod, :is_archived)");
         self::helper()->bind($insert, $properties);
         $insert->execute();
     }
 
     public static function update($id, $properties)
     {
-        $update = DB::connection()->prepare("UPDATE accounts SET label = :label, provider = :provider, identifier = :identifier, email = :email, description = :description, is_prod = :is_prod WHERE id = :id");
+        $update = DB::connection()->prepare("UPDATE accounts SET label = :label, provider = :provider, identifier = :identifier, email = :email, description = :description, is_prod = :is_prod, is_archived = :is_archived WHERE id = :id");
         self::helper()->bind($update, $properties);
         $update->bindParam(":id", $id);
         $update->execute();
@@ -41,7 +41,8 @@ class AccountAdministrator
             [CrudHelper::name => "identifier", CrudHelper::desc => "Identifier"],
             [CrudHelper::name => "description", CrudHelper::desc => "Description"],
             [CrudHelper::name => "email", CrudHelper::desc => "Email"],
-            [CrudHelper::name => "is_prod", CrudHelper::desc => "Production account", CrudHelper::type => CrudHelper::checkbox]
+            [CrudHelper::name => "is_prod", CrudHelper::desc => "Production account", CrudHelper::type => CrudHelper::checkbox],
+            [CrudHelper::name => "is_archived", CrudHelper::desc => "Archived account", CrudHelper::type => CrudHelper::checkbox]
         ];
         return new CrudHelper($fields);
     }

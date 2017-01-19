@@ -15,13 +15,15 @@ include "header.php";
             <th>Notification email</th>
             <th>Description</th>
             <th>Production</th>
+            <th>Archived</th>
             <th>Actions</th>
         </tr>
         <?
         foreach (AccountAdministrator::accounts() as $row) {
             $provider = AccountAdministrator::providers()[$row->provider];
             $prod = $row->is_prod ? "Yes" : "No";
-            print "<tr><td>{$row->label}</td><td>$provider</td><td>{$row->identifier}</td><td>{$row->email}</td><td>{$row->description}</td><td>$prod</td><td><a href='edit_account.php?account_id={$row->id}'>Edit</a> | <a href='edit_account.php?action=DELETE&account_id={$row->id}'>Delete</a></td></tr>";
+            $archived = $row->is_archived ? "Yes" : "No";
+            print "<tr><td>{$row->label}</td><td>$provider</td><td>{$row->identifier}</td><td>{$row->email}</td><td>{$row->description}</td><td>$prod</td><td>$archived</td><td><a href='edit_account.php?account_id={$row->id}'>Edit</a> | <a href='edit_account.php?action=DELETE&account_id={$row->id}'>Delete</a></td></tr>";
         }
         ?>
     </table>

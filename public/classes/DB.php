@@ -35,7 +35,7 @@ class DB
         foreach ($migrations as $migration) {
             if (substr($migration, 0, 1) == "m" && !in_array($migration, $migrated)) {
                 $classname = substr($migration, 0, -4);
-                include "lib/migrations/$migration";
+                include "migrations/$migration";
                 $migrate = new $classname;
                 $migrate->migrate(self::$conn);
                 self::$conn->exec("INSERT INTO migrations (migration) VALUES ('$migration')");
