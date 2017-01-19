@@ -3,13 +3,13 @@ require "autoload.php";
 $auth = new Authenticator();
 $sa = new ServiceAdministrator($auth);
 if (key_exists("action", $_REQUEST) && $_REQUEST["action"] == "FILTER") {
-    $_SESSION["account_id_filter"] = $_REQUEST["account_id"];
+    $_SESSION["account_id_filter"] = substr($_REQUEST["account_id"], 1);
     $_SESSION["archived_service_filter"] = key_exists("show_archived", $_REQUEST);
 }
 $accounts = [];
 @array_walk(AccountAdministrator::accounts(), function ($value, $key) use (&$accounts, &$auth) {
     if ($auth->belongsTo(Authenticator::administrator) || $value->is_prod == 0) {
-        $accounts[$value->id] = $value->label;
+        $accounts["a{$value->id}"] = $value->label;
     }
 });
 
@@ -22,7 +22,7 @@ include "header.php";
 <div class="container-fluid">
     <h1>Systems</h1>
     <form action="show_services.php" method="get">
-        Filter by account: <?= Filter::dropdown("account_id", array_merge([0 => "--All"], $accounts), $account_selected) ?>
+        Filter by account: <?= Filter::dropdown("account_id", array_merge(["a0" => "--All"], $accounts), "a".$account_selected) ?>
         | <input type="checkbox" name="show_archived"<?= $checked ?>/> Show archived systems
         <button type="submit" name="action" value="FILTER">Filter</button>
     </form>
