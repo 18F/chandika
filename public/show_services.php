@@ -8,7 +8,7 @@ if (key_exists("action", $_REQUEST) && $_REQUEST["action"] == "FILTER") {
 }
 $accounts = [];
 @array_walk(AccountAdministrator::accounts(), function ($value, $key) use (&$accounts, &$auth) {
-    if ($auth->belongsTo(Authenticator::administrator) || $value->is_prod == 0) {
+    if ($value->is_archived == 0 && ($auth->belongsTo(Authenticator::administrator) || $value->is_prod == 0)) {
         $accounts["a{$value->id}"] = $value->label;
     }
 });
