@@ -25,9 +25,9 @@ with open(args.billing_csv) as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         if row['RecordType'] == 'AccountTotal':
-            totals[row['LinkedAccountId']] = row['UnBlendedCost']
+            totals[row['LinkedAccountId']] = row['BlendedCost']
         elif row['RecordType'] == 'StatementTotal':
-            statement = row['UnBlendedCost']
+            statement = row['BlendedCost']
             match = re.search('\d\d\d\d-\d\d-\d\d', row['ItemDescription'])
             month = match.group()
         elif row['RecordType'] == 'LineItem':

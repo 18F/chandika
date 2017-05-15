@@ -54,6 +54,9 @@ class ServiceAdministrator
 
     public function create($properties)
     {
+        if ($properties["account_id"][0] == 'a') {
+	    $properties["account_id"] = substr($properties["account_id"], 1);
+        }
         if (!in_array($properties["account_id"], $this->accounts_permitted)) {
             return;
         }
