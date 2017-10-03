@@ -33,7 +33,7 @@ include "header.php";
         </tr>
         <?
         foreach ($billing_data as $account) {
-            print "<tr><td>{$account->tagvalue}</td><td>".money_format('%(#10n', $account->total)."</td></tr>";
+            print "<tr><td title=\"{$account->tagnote}\">{$account->tagvalue}</td><td>".money_format('%(#10n', $account->total)."</td></tr>";
         }
         ?>
     </table>

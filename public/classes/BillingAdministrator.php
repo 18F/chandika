@@ -17,7 +17,7 @@ class BillingAdministrator
 
     public static function byTag($account_id, $invoice_date, $tag_name)
     {
-        $query = "SELECT SUM(amount) * discount_factor as total, tagvalue FROM billing
+        $query = "SELECT SUM(amount) * discount_factor as total, tagvalue, tagnote FROM billing
                   WHERE tagname = :tagname AND invoice_date = :invoice_date AND identifier = :account_id
                   GROUP BY tagvalue ORDER BY tagvalue";
         return DB::query($query, [":invoice_date" => $invoice_date, ":account_id" => $account_id, ":tagname" => $tag_name]);
