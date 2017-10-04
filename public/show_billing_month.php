@@ -30,10 +30,11 @@ include "header.php";
         <tr>
             <th>Tag value</th>
             <th>Amount</th>
+            <th>Tag note</th>
         </tr>
         <?
         foreach ($billing_data as $account) {
-            print "<tr><td title=\"{$account->tagnote}\">{$account->tagvalue}</td><td>".money_format('%(#10n', $account->total)."</td></tr>";
+            print "<tr><td>{$account->tagvalue}</td><td>".money_format('%(#10n', $account->total)."</td><td>{$account->tagnote}</td></tr>";
         }
         ?>
     </table>
